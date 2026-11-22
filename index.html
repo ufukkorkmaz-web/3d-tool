@@ -83,7 +83,7 @@ body{padding:7px 10px!important}
 .view-presets .chip[aria-pressed=true]{background:#9566cb!important;color:white!important}
 @media(max-height:620px){.viewer .stage-help{display:none}.viewer .stage-label{font-size:9px;padding:2px 7px}.view-presets .chip{padding:3px 6px!important}}
 @media(max-width:820px){.view-presets{flex-wrap:wrap!important}.viewer .stage-help{font-size:9px}}
-</style></head><body>
+</style></head><body class="company-launch-active">
 <title>Eyewear Design Studio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
@@ -543,8 +543,68 @@ details{border-top-color:#514b66!important;color:#d7cde6!important}
 .studio-footer{flex:0 0 auto;text-align:center;font-size:11px;line-height:1.2;color:var(--muted);padding:5px 0 1px;letter-spacing:.025em}
 @media(max-height:620px){.studio-footer{padding:2px 0 0;font-size:10px}}
 </style>
+<style>
+/* Subtle company watermark in the unused space above the 3D model. */
+.grid>.panel[aria-labelledby="h-look"]{position:relative}
+#companyPreviewBrand{position:absolute;left:14px;right:14px;top:65px;min-height:34px;display:flex;align-items:center;justify-content:center;gap:13px;opacity:.35;pointer-events:none;z-index:1;overflow:hidden;color:var(--fg);transition:top .12s ease}
+#companyPreviewBrand svg{width:clamp(36px,4.5vw,58px);height:clamp(36px,4.5vw,58px);flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+#companyPreviewBrandName{font:800 clamp(16px,2.1vw,29px)/1.12 var(--font-head);letter-spacing:-.03em;overflow-wrap:anywhere;max-width:75%;text-align:center}
+#companyPreviewBrand[hidden]{display:none!important}
+@media(max-width:820px){#companyPreviewBrand{gap:8px}#companyPreviewBrand svg{width:34px;height:34px}#companyPreviewBrandName{font-size:17px}}
+/* Student company launch: separate first screen, existing single-screen studio unchanged. */
+body.company-launch-active .wrap{display:none!important}
+body:not(.company-launch-active) #companyLaunch{display:none!important}
+#companyLaunch{height:100dvh;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(8px,2vh,24px);overflow-y:auto;color:var(--fg)}
+.launch-shell{width:min(970px,100%);max-height:100%;min-height:0;display:flex;flex-direction:column;gap:clamp(8px,1.5vh,16px);padding:clamp(13px,2.4vh,26px);background:var(--surface);border:1px solid var(--line);border-radius:23px;box-shadow:var(--shadow)}
+.launch-kicker{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--muted)}
+.launch-heading{font:800 clamp(23px,3vw,36px)/1.1 var(--font-head);margin:0;color:var(--fg)!important}
+.launch-sub{color:var(--muted);margin:0;font-size:clamp(12px,1.4vw,14px)}
+.launch-name-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(160px,.55fr);gap:12px;align-items:end}
+.launch-field{display:grid;gap:5px;font-weight:700;font-size:13px}
+.launch-field input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:var(--surface-2);color:var(--fg);font-size:16px;min-width:0}
+.launch-picked{min-height:46px;border:1px solid var(--line);border-radius:11px;display:flex;align-items:center;gap:10px;padding:5px 10px;background:var(--surface-2);font-weight:750;overflow:hidden}
+.launch-picked svg{height:31px;width:31px;flex:none}
+.launch-picked span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.launch-logos-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.launch-logos-head strong{font-size:14px}
+.launch-logos-head small{font-size:11px;color:var(--muted)}
+.logo-choices{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;min-height:0;overflow-y:auto;padding:4px 2px}
+.logo-option{position:relative;display:flex;flex-direction:column;gap:5px;justify-content:center;align-items:center;min-width:0;padding:9px 4px 6px;border:1px solid var(--line);border-radius:13px;background:var(--surface-2);color:var(--fg);cursor:pointer;font:600 10px var(--font-body);box-shadow:none}
+.logo-option svg{width:clamp(25px,3vw,39px);height:clamp(25px,3vw,39px);stroke:var(--logo-ink,#c89aff);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.logo-option span{overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.logo-option[aria-pressed=true]{border:2px solid #c89aff;background:#423653;box-shadow:0 0 0 2px rgba(200,154,255,.14)}
+.logo-option:hover{border-color:#c89aff}
+.launch-actions{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.launch-help{font-size:12px;color:var(--muted)}
+.launch-start{padding:10px 25px!important;font-size:14px!important;white-space:nowrap}
+.launch-error{color:#ffc2ce;font-size:12px;min-height:1em}
+.launch-footer{text-align:center;color:var(--muted);font-size:11px;padding-top:4px}
+.company-strip{flex:none;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:28px;padding:2px 7px;margin-bottom:3px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.company-identity{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;min-width:0}
+.company-identity svg{width:22px;height:22px;flex:none;stroke:#d9b4ff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#companyStudioName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.company-edit{padding:3px 8px!important;font-size:11px!important;flex:none}
+@media(max-width:700px){.logo-choices{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.launch-name-row{grid-template-columns:1fr}.launch-shell{max-height:100%;overflow-y:auto}.launch-picked{min-height:40px}.logo-option{padding:7px 2px 5px}}
+@media(max-height:580px) and (min-width:701px){.launch-shell{gap:7px;padding:12px}.logo-option{padding:4px 2px 3px}.logo-option svg{width:26px;height:26px}.launch-field input{padding:7px}.launch-sub{display:none}}
+</style>
 
+<section id="companyLaunch" aria-labelledby="launchTitle">
+ <div class="launch-shell">
+  <div class="launch-kicker">Year 7 IPT · Smart Eyewear Challenge</div>
+  <h1 id="launchTitle" class="launch-heading">🚀 Launch your eyewear company</h1>
+  <p class="launch-sub">Work with your team: invent a company name, choose a logo, then start designing your smart glasses.</p>
+  <div class="launch-name-row">
+   <label class="launch-field" for="companyName">Your team's company name <input id="companyName" maxlength="40" autocomplete="off" placeholder="e.g. FutureFocus Labs"></label>
+   <div class="launch-field"><span>Company identity preview</span><div class="launch-picked"><span id="launchPickedLogo" aria-hidden="true"></span><span id="launchPickedName">Your company</span></div></div>
+  </div>
+  <div class="launch-logos-head"><strong>Choose your company logo</strong><small>Pick one of 20 designs</small></div>
+  <div id="logoChoices" class="logo-choices" role="group" aria-label="Choose one of twenty company logos"></div>
+  <div class="launch-actions"><div><div class="launch-help">You can change your company name and logo later.</div><div id="launchError" class="launch-error" role="status"></div></div><button type="button" id="launchStart" class="primary launch-start">Enter Design Studio →</button></div>
+ </div>
+ <div class="launch-footer">Year 7 IPT - 2026</div>
+</section>
 <div class="wrap">
+  <div class="company-strip" id="companyStrip"><div class="company-identity"><span id="companyStudioLogo" aria-hidden="true"></span><span id="companyStudioName"></span></div><button type="button" id="companyEdit" class="chip company-edit">✎ Edit company</button></div>
 
   <nav class="studio-tabs" aria-label="Studio sections"><button class="chip" data-screen="draw" aria-pressed="true">✏️ Draw</button><button class="chip" data-screen="preview" aria-pressed="false">🧊 3D View</button></nav>
   <main class="grid">
@@ -616,6 +676,7 @@ details{border-top-color:#514b66!important;color:#d7cde6!important}
 
        <p class="hint">Your drawing appears on the eyewear in 3D. Drag to rotate, scroll to zoom.</p>
        <span id="modeHint" hidden></span>
+       <div id="companyPreviewBrand" aria-label="Your company branding" hidden><span id="companyPreviewBrandLogo" aria-hidden="true"></span><span id="companyPreviewBrandName"></span></div>
       <div class="viewer" id="viewer" tabindex="0" aria-label="3D model. Drag to turn it, scroll to zoom. Arrow keys also turn it.">
         <span class="stage-label">✦ Interactive 3D</span>
          <span class="stage-help">Drag to orbit · Pinch to zoom</span>
@@ -1610,7 +1671,7 @@ chooseEyewear('ordinary');
     var previous=st.style.display;st.style.display='none';
     var content=0, visibleCount=0;
     Array.from(p.children).forEach(function(child){
-      if(child!==st&&getComputedStyle(child).display!=='none'){
+      if(child!==st&&child.id!=='companyPreviewBrand'&&getComputedStyle(child).display!=='none'){
         content+=child.getBoundingClientRect().height;visibleCount++;
       }
     });
@@ -1626,6 +1687,19 @@ chooseEyewear('ordinary');
     root.style.setProperty('--studio-draw-offset',offsets[0]+'px');
     root.style.setProperty('--studio-view-offset',offsets[1]+'px');
   }
+  requestAnimationFrame(positionCompanyBrand);
+ }
+ function positionCompanyBrand(){
+  var brand=document.getElementById('companyPreviewBrand');
+  var panel=sections[1], hint=panel.querySelector('.hint'), stage=document.getElementById('viewer');
+  if(!brand||!panel||!hint||!stage)return;
+  var pr=panel.getBoundingClientRect(), hr=hint.getBoundingClientRect(), sr=stage.getBoundingClientRect();
+  var top=hr.bottom-pr.top+7, bottom=sr.top-pr.top-7, room=bottom-top;
+  if(room<38||sr.width===0){brand.hidden=true;return;}
+  brand.hidden=false;
+  var desiredHeight=Math.min(room,Math.max(42,Math.min(65,room)));
+  brand.style.top=(top+(room-desiredHeight)/2)+'px';
+  brand.style.height=desiredHeight+'px';
  }
  view('draw');
  document.querySelectorAll('.design-dropdown').forEach(function(d){d.addEventListener('toggle',function(){if(d.open)document.querySelectorAll('.design-dropdown').forEach(function(other){if(other!==d)other.open=false;});requestAnimationFrame(fit);});});
@@ -1634,6 +1708,43 @@ chooseEyewear('ordinary');
  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
  new MutationObserver(function(){requestAnimationFrame(fit);}).observe(document.getElementById('glassesControls'),{attributes:true,attributeFilter:['hidden']});
  requestAnimationFrame(fit);
+})();
+</script>
+<script>
+/* Company launch is self-contained, does not alter drawing or 3D defaults. */
+(function(){
+ 'use strict';
+ var icons=[["Vision", "<path d=\"M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>"], ["Glasses", "<path d=\"M2 9h3l2 7h5l2-7h3l2 7h4M2 9l1 7h5M16 16h5l1-7M12 12h2\"/>"], ["Spark", "<path d=\"m12 2 2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2Z\"/>"], ["Globe", "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18M12 3c-5 5-5 13 0 18M12 3c5 5 5 13 0 18\"/>"], ["Compass", "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m15.8 8.2-2 5.6-5.6 2 2-5.6Z\"/>"], ["Bolt", "<path d=\"m13 2-9 12h7l-1 8 10-13h-7Z\"/>"], ["Mountain", "<path d=\"m2 20 7-12 4 6 3-4 6 10H2Z\"/><circle cx=\"17\" cy=\"5\" r=\"2\"/>"], ["Leaf", "<path d=\"M20 3C10 3 4 7 4 15c0 4 4 7 8 5 6-3 8-10 8-17ZM4 21c4-7 9-10 14-13\"/>"], ["Orbit", "<circle cx=\"12\" cy=\"12\" r=\"3\"/><ellipse cx=\"12\" cy=\"12\" rx=\"10\" ry=\"5\" transform=\"rotate(-35 12 12)\"/><ellipse cx=\"12\" cy=\"12\" rx=\"10\" ry=\"5\" transform=\"rotate(35 12 12)\"/>"], ["Shield", "<path d=\"M12 2 21 6v6c0 6-4 9-9 10-5-1-9-4-9-10V6Z\"/><path d=\"m8 12 3 3 5-6\"/>"], ["Wave", "<path d=\"M2 8c3-5 5 5 8 0s5 5 8 0 3-1 4 0M2 16c3-5 5 5 8 0s5 5 8 0 3-1 4 0\"/>"], ["Pixel", "<rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/>"], ["Sun", "<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 1v3M12 20v3M1 12h3M20 12h3M4 4l2 2M18 18l2 2M20 4l-2 2M6 18l-2 2\"/>"], ["Moon", "<path d=\"M20 15.4A9 9 0 0 1 8.6 4 9 9 0 1 0 20 15.4Z\"/><path d=\"M18 3v5M15.5 5.5h5\"/>"], ["Cube", "<path d=\"m12 2 9 5v10l-9 5-9-5V7Z M3 7l9 5 9-5M12 12v10\"/>"], ["Target", "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"1.5\"/>"], ["Rocket", "<path d=\"M5 15c0-6 6-12 14-12 0 8-6 14-12 14l-2-2ZM10 19l-3 3M5 13l-3 1 1-6 4-2M11 19l5 2 1-5\"/><circle cx=\"15\" cy=\"9\" r=\"2\"/>"], ["Heart", "<path d=\"M12 21 3.5 12.5C-1 7 5 1 10 6l2 2 2-2c5-5 11 1 6.5 6.5Z\"/>"], ["Circuit", "<circle cx=\"5\" cy=\"5\" r=\"2\"/><circle cx=\"19\" cy=\"5\" r=\"2\"/><circle cx=\"5\" cy=\"19\" r=\"2\"/><circle cx=\"19\" cy=\"19\" r=\"2\"/><path d=\"M7 5h5v7h7M5 7v5h7v7M17 5h-2v7M7 19h5v-3\"/>"], ["Prism", "<path d=\"m12 2 10 18H2Z M12 2v18M6 14h12\"/>"]];
+ var selected=0;
+ var input=document.getElementById('companyName');
+ var choices=document.getElementById('logoChoices');
+ function svg(i){return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+icons[i][1]+'</svg>';}
+ icons.forEach(function(item,i){
+  var b=document.createElement('button');b.type='button';b.className='logo-option';b.setAttribute('aria-label',item[0]+' logo');b.setAttribute('aria-pressed','false');
+  b.innerHTML=svg(i)+'<span>'+item[0]+'</span>';
+  b.addEventListener('click',function(){selected=i;paint();});choices.appendChild(b);
+ });
+ function paint(){
+  Array.prototype.forEach.call(choices.children,function(b,i){b.setAttribute('aria-pressed',String(i===selected));});
+  document.getElementById('launchPickedLogo').innerHTML=svg(selected);
+  document.getElementById('launchPickedName').textContent=input.value.trim()||'Your company';
+  document.getElementById('companyStudioLogo').innerHTML=svg(selected);
+  document.getElementById('companyStudioName').textContent=input.value.trim()||'Your company';
+  document.getElementById('companyPreviewBrandLogo').innerHTML=svg(selected);
+  document.getElementById('companyPreviewBrandName').textContent=input.value.trim()||'Your company';
+ }
+ function enter(){
+  if(!input.value.trim()){document.getElementById('launchError').textContent='Enter your company name first.';input.focus();return;}
+  document.getElementById('launchError').textContent='';
+  paint();document.body.classList.remove('company-launch-active');
+  window.dispatchEvent(new Event('resize'));
+ }
+ function edit(){document.body.classList.add('company-launch-active');input.focus();}
+ input.addEventListener('input',function(){document.getElementById('launchError').textContent='';paint();});
+ input.addEventListener('keydown',function(e){if(e.key==='Enter')enter();});
+ document.getElementById('launchStart').addEventListener('click',enter);
+ document.getElementById('companyEdit').addEventListener('click',edit);
+ paint();
 })();
 </script>
 </body></html>
