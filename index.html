@@ -1,5 +1,90 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Draw to 3D — Soft Clay Studio</title>
+<!doctype html><html data-theme="dark"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+/* Single-viewport three-workspace layout: all controls remain functional. */
+html,body{width:100%;height:100%;height:100dvh;overflow:hidden;overscroll-behavior:none}
+body{padding:7px 10px!important}
+.wrap{height:calc(100dvh - 14px)!important;max-width:none!important;min-height:0;display:flex;flex-direction:column}
+.top{margin:0 0 5px!important;flex:none}
+.top h1{font-size:clamp(17px,1.6vw,22px)}
+.top .lede{font-size:11px;margin:0}
+.studio-tabs{display:none}
+.grid{display:grid!important;grid-template-columns:minmax(0,1.03fr) minmax(0,.94fr) minmax(0,1.13fr)!important;gap:9px!important;flex:1;min-height:0;align-items:stretch!important}
+.grid>.panel,.grid>.custom-dock{min-width:0;min-height:0;max-height:100%;overflow:hidden;margin:0!important;border-radius:16px!important;padding:9px!important;gap:5px!important}
+.grid>.panel{display:flex;flex-direction:column}
+.panel h2,.custom-dock h2{font-size:14px!important;line-height:1.2;margin:0!important}
+.panel .row{gap:4px 5px!important}
+.panel .chip,.custom-dock .chip{font-size:11px!important;padding:4px 7px!important;line-height:1.15!important;border-radius:9px!important}
+.panel .seg span{font-size:11px;padding:4px 6px}
+.panel .mini-label,.panel .check,.panel .size,.custom-dock label{font-size:11px!important}
+.panel .sw{width:20px!important;height:20px!important}
+.panel .swatches{gap:5px}
+.panel .size input{width:65px}
+.panel .make-row{padding:4px 5px}
+.panel .primary,.custom-dock .primary{font-size:12px!important;padding:6px 10px!important;border-radius:10px!important}
+.panel .hint,.panel .status,.panel details{font-size:11px!important;line-height:1.2}
+.panel details{margin-top:auto}
+.panel .paperwrap,.panel .viewer{width:var(--studio-stage, 260px)!important;height:var(--studio-stage, 260px)!important;max-width:100%!important;max-height:100%!important;min-height:0!important;flex:none!important;align-self:center;margin-top:0!important;aspect-ratio:1}
+#paper{height:100%!important;width:100%!important}
+.custom-dock{display:flex;flex-direction:column;background:var(--surface)!important;box-shadow:var(--shadow)}
+.custom-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:min-content;gap:6px!important;align-content:start;min-height:0}
+.custom-group{padding:7px!important;gap:5px!important;border-radius:11px!important;min-height:0}
+.custom-group h3{font-size:11px!important;line-height:1.15}
+.custom-group label{gap:4px!important;min-height:20px;line-height:1.1}
+.custom-group input[type=range]{width:55px;max-width:55px}
+.custom-group input[type=color]{width:28px;height:23px;flex:none}
+.custom-group select,.custom-group input[type=text]{font-size:10px!important;padding:3px!important;min-width:0;max-width:94px!important}
+.custom-group small,.custom-group>span:not(#saveStatus){display:none}
+.custom-group .decor-buttons{gap:3px}
+.custom-group .decor-buttons button{font-size:14px!important;padding:3px 0!important;min-width:0}
+#saveStatus{font-size:10px!important;min-height:0}
+#showcaseGrid{display:flex;flex-wrap:nowrap!important;gap:5px!important;overflow:hidden!important;min-height:0;max-height:78px;margin-top:4px!important}
+.saved-item{width:66px!important;min-width:66px;padding:3px!important;gap:2px!important;font-size:9px!important}
+.saved-item img{width:34px!important;height:34px!important;aspect-ratio:auto;justify-self:center}
+.saved-item .row{gap:2px}.saved-item button{font-size:8px!important;padding:2px!important}
+@media(min-width:821px) and (max-height:720px){
+ .top .lede{display:none}.panel .chip,.custom-dock .chip{padding:3px 6px!important}
+ .grid>.panel,.grid>.custom-dock{padding:6px!important;gap:3px!important}
+ .custom-group{padding:5px!important;gap:3px!important}
+ .custom-grid{gap:4px!important}
+ .panel .sw{width:18px!important;height:18px!important}
+}
+@media(max-width:820px){
+ body{padding:5px!important}
+ .wrap{height:calc(100dvh - 10px)!important}
+ .top .lede{display:none}
+ .studio-tabs{display:flex;flex:none;gap:5px;margin:3px 0 6px}
+ .studio-tabs .chip{flex:1;font-size:12px!important;padding:7px 3px!important}
+ .grid{display:block!important;position:relative;min-height:0}
+ .grid>.panel,.grid>.custom-dock{height:100%;max-height:100%;overflow:hidden!important;display:none;margin:0!important;padding:7px!important}
+ .grid>.panel.is-active,.grid>.custom-dock.is-active{display:flex!important}
+ .panel .paperwrap,.panel .viewer{width:var(--studio-stage,220px)!important;height:var(--studio-stage,220px)!important;max-width:100%!important}
+ .custom-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;flex:1;overflow:hidden}
+ .custom-group{padding:5px!important}
+ #showcaseGrid{max-height:58px}
+ .saved-item{width:56px!important;min-width:56px}
+ .saved-item img{width:24px!important;height:24px!important}
+}
+@media(max-width:430px){.custom-grid{gap:4px!important}.custom-group label{font-size:10px!important}.custom-group select{max-width:82px!important}}
+
+/* The paired canvases share exactly the same size and top edge on desktop. */
+@media(min-width:821px){
+ .panel .paperwrap{margin-top:var(--studio-draw-offset,0px)!important}
+ .panel .viewer{margin-top:var(--studio-view-offset,0px)!important}
+}
+
+/* 2026 presentation upgrade: matched, accessible compact workspaces. */
+.viewer{background:radial-gradient(ellipse at 35% 24%,#51506e 0%,#303047 42%,#161927 100%)!important;isolation:isolate}
+.viewer::before{content:""!important;display:block!important;position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.55;background:linear-gradient(transparent 74%,rgba(184,175,227,.12) 75%,transparent 76%),linear-gradient(90deg,transparent 74%,rgba(184,175,227,.09) 75%,transparent 76%);background-size:38px 38px;mask-image:linear-gradient(to bottom,transparent 28%,black 100%)}
+.viewer canvas{z-index:1}
+.viewer .viewmsg{z-index:3}
+.viewer .stage-label{position:absolute;top:10px;left:11px;z-index:2;pointer-events:none;color:#f3eaff;background:rgba(18,16,33,.52);border:1px solid rgba(216,197,255,.24);border-radius:999px;padding:4px 9px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(5px)}
+.viewer .stage-help{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);z-index:2;white-space:nowrap;pointer-events:none;color:#eae1f7;background:rgba(19,17,32,.56);border-radius:999px;padding:4px 9px;font-size:10px}
+.view-presets{gap:4px!important;flex-wrap:nowrap!important}
+.view-presets .chip{padding:4px 8px!important;font-size:11px!important}
+.view-presets .chip[aria-pressed=true]{background:#9566cb!important;color:white!important}
+@media(max-height:620px){.viewer .stage-help{display:none}.viewer .stage-label{font-size:9px;padding:2px 7px}.view-presets .chip{padding:3px 6px!important}}
+@media(max-width:820px){.view-presets{flex-wrap:wrap!important}.viewer .stage-help{font-size:9px}}
+</style></head><body>
+<title>Eyewear Design Studio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
 <style>
@@ -151,6 +236,7 @@ textarea{width:100%;min-height:84px;resize:vertical;border:1px solid var(--line)
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .clayTag{color:#ffd9e2;background:#5B3649;border-color:#77445E}}
 
+#backpackControls{gap:6px;font-size:.75rem}
 /* Single-screen Chromebook studio: keep the complete toolset visible. */
 @media (min-width:821px){
   html,body{min-height:100%;}
@@ -186,79 +272,367 @@ textarea{width:100%;min-height:84px;resize:vertical;border:1px solid var(--line)
   .seg span{padding:4px 7px;}
   .row{gap:4px;}
 }
+
+/* Readable student-first Chromebook UI. Keep all original controls and identifiers. */
+:root{--fg:#282332;--muted:#514a58;--line:#cfc4d1;--surface-2:#f7f3fa;--accent:#b93665;--focus:#5542c5}
+body{font-size:14px}
+.chip,.seg span,select{font-weight:650}
+.chip{border-color:#cec3d1;background:#faf8fc}
+.chip:hover,.seg label:hover span{border-color:#7c6592;background:#f1e9f6}
+.chip[aria-pressed="true"],.seg input:checked+span{background:#493d67;color:#fff;border-color:#493d67}
+.chip[aria-pressed="true"]:hover{background:#493d67}
+.check{color:var(--fg);font-weight:550}
+.check input{width:17px;height:17px;flex:none}
+.mini-label{font-size:13px;font-weight:750;color:#51435c;white-space:nowrap}
+#h-draw,#h-look{font-weight:750;color:#38284c}
+#status,.hint{color:#514a58}
+.make-row{background:#f9f0f5;border-radius:10px;padding:5px 7px}
+.primary{background:#b93665;color:white;box-shadow:none;letter-spacing:.01em}
+.primary:hover{background:#9d2e55}
+#backpackControls:not([hidden]),#glassesControls:not([hidden]){background:#f6f0ff;border:1px solid #dfd2ed;border-radius:9px;padding:6px 8px}
+#backpackControls .size,#backpackControls .check,#glassesControls .size,#glassesControls .check{font-size:13px;color:#30263b}
+#backpackControls input[type=range]{width:95px}
+.sw{width:25px;height:25px}
+#modeHint{display:none}
+.viewer{border-color:#bdb2c3}
+@media (min-width:821px){
+ body{padding:7px 12px}
+ .wrap{height:calc(100dvh - 14px);max-width:1500px}
+ h1{font-size:23px;line-height:1.15}
+ .clayTag{font-size:11px;padding:4px 9px}
+ .lede{display:block;font-size:13px;line-height:1.15;margin-top:2px}
+ .top{margin-bottom:6px}
+ .grid{gap:12px}
+ .panel{padding:9px 12px;gap:6px;border-radius:16px}
+ .panel h2{font-size:17px;line-height:1.25}
+ .chip{font-size:13px;line-height:1.3;padding:5px 9px}
+ .seg span{font-size:13px;line-height:1.25;padding:6px 9px}
+ .size,.check,.slider{font-size:13px}
+ .size input{width:95px}
+ .swatches{gap:7px}
+ .sw{width:25px;height:25px}
+ .mini-label{font-size:13px;margin-right:3px}
+ .primary{font-size:16px;padding:8px 16px}
+ .paperwrap,.viewer{width:min(100%,calc(100dvh - 370px));max-height:calc(100dvh - 370px)}
+ .status{font-size:12px;line-height:1.2;min-height:0}
+ .slider{grid-template-columns:88px minmax(0,1fr) 35px;gap:8px}
+ details{font-size:12px}
+ .row{gap:5px 7px}
+ .make-row{padding:5px 7px}
+}
+@media (min-width:821px) and (max-height:700px){
+ .lede{display:none}
+ .paperwrap,.viewer{width:min(100%,calc(100dvh - 335px));max-height:calc(100dvh - 335px)}
+ .chip{padding:4px 8px}
+ .panel{gap:4px;padding:7px 10px}
+ .primary{padding:6px 13px}
+}
+@media (max-width:820px){
+ .chip{font-size:14px;min-height:36px}
+ .seg span{font-size:14px}
+ .panel h2{font-size:19px}
+ .mini-label{font-size:14px}
+}
+
+/* Consistent accessible student palette: avoids a dark OS theme being
+   combined with light-only tool buttons, which made labels unreadable. */
+:root[data-theme="light"] {color-scheme:light;--bg:#f3f0f8;--surface:#ffffff;--surface-2:#f6f3fc;
+ --fg:#29223a;--muted:#51465c;--line:#cfc5dc;--accent:#ad2757;--accent-fg:#fff;--focus:#5132a3;
+ --stage-1:#f2eff8;--stage-2:#e8e4f0;}
+.chip,.seg span,select {background:#f7f4fc;color:#29223a;border-color:#bcb0cd;font-weight:700;}
+.chip:hover,.seg label:hover span {background:#e8e0f3;color:#251d35;border-color:#776394;}
+.chip[aria-pressed="true"],.seg input:checked+span {background:#49356e!important;color:#fff!important;border-color:#49356e!important;}
+.chip[aria-pressed="true"]:hover,.seg input:checked+span:hover {background:#392654!important;}
+.chip:disabled {opacity:.55;cursor:not-allowed;}
+.label,.mini-label,.panel h2,#status,.hint {color:#473353;}
+.check,.size {color:#322a42;}
+.make-row {background:#f5e9f1;}
+.primary {background:#aa285a;color:#fff;}
+.primary:hover {background:#8d204b;}
+@media (forced-colors:active) {
+ .chip[aria-pressed="true"],.seg input:checked+span {outline:2px solid Highlight;outline-offset:1px;}
+}
+
+/* Claymorphism visual system — all existing app controls and geometry are retained. */
+:root[data-theme="light"]{
+ color-scheme:light;
+ --bg:#e9e4f6;--surface:#f7f3ff;--surface-2:#f0eafb;
+ --fg:#29243b;--muted:#534966;--line:#ddd4ef;
+ --accent:#a94b90;--accent-fg:#fff;--focus:#614ab1;
+ --stage-1:#ebe6f5;--stage-2:#e4deef;
+ --shadow:10px 12px 24px rgba(100,79,144,.14),-7px -7px 19px rgba(255,255,255,.87),inset 1px 1px 1px rgba(255,255,255,.85);
+}
+body{background:#e9e4f6;color:var(--fg);}
+.panel{
+ background:#f7f3ff;border:1px solid rgba(255,255,255,.94);border-radius:26px;
+ box-shadow:10px 12px 24px rgba(92,72,131,.17),-8px -8px 19px rgba(255,255,255,.92),inset 2px 2px 2px rgba(255,255,255,.98);
+}
+.panel h2{color:#43345f;font-weight:800;}
+h1{color:#392e55;letter-spacing:-.035em;}
+.lede{color:#534966;}
+.clayTag{
+ color:#694182;background:#e9d9f7;border:1px solid #f9ecff;border-radius:30px;
+ box-shadow:3px 4px 8px rgba(107,78,142,.17),-2px -2px 6px #fff,inset 1px 1px 2px #fff;
+}
+.chip,.seg span,select{
+ appearance:none;background:#f0ebfa!important;color:#352a49!important;
+ border:1px solid #fdf9ff!important;border-radius:13px;
+ box-shadow:3px 4px 8px rgba(112,94,153,.19),-3px -3px 8px rgba(255,255,255,.98),inset 1px 1px 1px rgba(255,255,255,.97);
+ font-weight:750;transition:transform .12s ease,box-shadow .12s ease,background .12s ease;
+}
+.chip:hover,.seg label:hover span{background:#e5dcf6!important;color:#2b203e!important;transform:translateY(-1px);}
+.chip:active,.seg label:active span{
+ transform:translateY(1px);box-shadow:inset 2px 3px 6px rgba(100,75,141,.20),inset -2px -2px 5px #fff;
+}
+.chip[aria-pressed="true"],.seg input:checked+span,
+.chip[aria-pressed="true"]:hover,.seg input:checked+span:hover{
+ color:#fff!important;background:#7158ad!important;border-color:#8870bb!important;
+ box-shadow:inset 3px 3px 7px rgba(46,30,88,.32),inset -2px -2px 5px rgba(255,255,255,.17),2px 3px 5px rgba(94,69,146,.14);
+ transform:none;
+}
+.primary,.primary:hover{
+ background:#a84984;color:#fff;border:1px solid #cd80ad;border-radius:16px;
+ box-shadow:4px 5px 0 #7e376a,7px 9px 13px rgba(119,68,119,.20),inset 2px 2px 3px rgba(255,255,255,.36);
+ text-shadow:0 1px 1px rgba(77,39,78,.16);font-weight:800;
+}
+.primary:hover{background:#964078;transform:translateY(-1px);}
+.primary:active{transform:translateY(3px);box-shadow:2px 2px 0 #7e376a,inset 2px 2px 7px rgba(59,22,54,.25);}
+.paperwrap{
+ border:5px solid #f9f6ff;border-radius:20px;background:#fff;
+ box-shadow:inset 2px 2px 8px rgba(74,57,99,.09),5px 6px 13px rgba(103,86,144,.16),-3px -3px 9px rgba(255,255,255,.95);
+}
+.viewer{
+ background:#e4deef;border:5px solid #f9f6ff;border-radius:20px;
+ box-shadow:inset 3px 3px 9px rgba(94,76,124,.18),inset -3px -3px 8px rgba(255,255,255,.72),5px 6px 13px rgba(103,86,144,.13);
+}
+.viewer::before,.viewer::after{content:none!important;}
+.make-row{
+ background:#f3dfea;border:1px solid #fff1fa;border-radius:18px;
+ box-shadow:inset 2px 3px 7px rgba(143,91,135,.12),inset -2px -2px 5px rgba(255,255,255,.75);
+}
+#backpackControls:not([hidden]){
+ background:#eee5fa;border:1px solid #fff;border-radius:16px;
+ box-shadow:inset 2px 3px 7px rgba(95,76,132,.12),inset -2px -2px 5px #fff;
+}
+.sw{
+ border:3px solid #faf7ff;box-shadow:2px 3px 6px rgba(99,83,134,.28),-2px -2px 5px #fff;
+}
+.sw[aria-pressed="true"]{outline:2px solid #59439f;outline-offset:2px;box-shadow:2px 3px 5px rgba(99,83,134,.23);}
+input[type=color]{border:2px solid #fff;border-radius:9px;box-shadow:2px 3px 7px rgba(109,84,150,.22);}
+input[type=range]{accent-color:#8e65bb;}
+input[type=checkbox]{accent-color:#7856b2;}
+.mini-label,.label,.check,.size{color:#3d3252;}
+#status,.hint{color:#51445f;}
+details{border-top:1px solid #dcd3eb;}
+:focus-visible,.seg input:focus-visible+span{outline:3px solid #6044b6!important;outline-offset:3px;}
+@media (min-width:821px){
+ .panel{border-radius:23px;}
+ .paperwrap,.viewer{border-width:4px;border-radius:18px;}
+ .chip,.seg span,select{border-radius:12px;}
+ .primary{border-radius:13px;}
+}
+@media (prefers-reduced-motion:reduce){.chip,.seg span,.primary{transition:none!important;}}
+@media (forced-colors:active){.chip,.seg span,.primary{border:1px solid ButtonText!important;box-shadow:none!important;}}
+
+
+/* Dark claymorphism: rich charcoal-plum, readable labels, sculpted buttons. */
+:root[data-theme="dark"]{
+ color-scheme:dark;--bg:#15141f;--surface:#262436;--surface-2:#302d43;
+ --fg:#f7f3ff;--muted:#c7bfd9;--line:#514b66;
+ --accent:#e77aab;--accent-fg:#241628;--focus:#d3b2ff;
+ --stage-1:#222131;--stage-2:#1a1b29;
+ --shadow:8px 10px 22px rgba(5,3,15,.48),-4px -4px 14px rgba(96,89,132,.13);
+}
+body{background:#15141f!important;color:#f7f3ff!important}
+.panel{
+ background:#262436!important;border:1px solid #4e4864!important;border-radius:24px!important;
+ box-shadow:8px 10px 25px rgba(5,3,14,.48),-5px -5px 15px rgba(105,98,146,.13),inset 1px 1px 1px rgba(255,255,255,.10)!important;
+}
+h1,.panel h2,#h-draw,#h-look{color:#faf5ff!important}
+.lede,.label,.mini-label,.check,.size,.hint,#status,.status,summary{color:#e2d9ef!important}
+.clayTag{color:#ffe3f2!important;background:#50314e!important;border:1px solid #785371!important;box-shadow:3px 4px 8px #0c0a17,-2px -2px 6px rgba(173,125,188,.13)!important}
+.chip,.seg span,select{
+ background:#38344c!important;color:#f9f5ff!important;border:1px solid #605975!important;
+ border-radius:13px!important;box-shadow:3px 4px 8px rgba(2,2,12,.48),-2px -2px 7px rgba(157,143,199,.14),inset 1px 1px 1px rgba(255,255,255,.11)!important;
+ text-shadow:none!important;
+}
+.chip:hover,.seg label:hover span{background:#48415e!important;color:#fff!important;border-color:#8978a8!important}
+.chip[aria-pressed="true"],.seg input:checked+span,
+.chip[aria-pressed="true"]:hover,.seg input:checked+span:hover{
+ background:#9566cb!important;color:#fff!important;border-color:#b08be1!important;
+ box-shadow:inset 3px 3px 7px rgba(34,17,68,.55),inset -2px -2px 4px rgba(255,255,255,.18),2px 3px 7px rgba(8,5,19,.25)!important;
+}
+.primary,.primary:hover{background:#e77aab!important;color:#28172a!important;border:1px solid #ffb5d5!important;border-radius:15px!important;
+ box-shadow:4px 5px 0 #8e426f,7px 10px 14px rgba(6,3,15,.38),inset 2px 2px 3px rgba(255,255,255,.38)!important;text-shadow:none!important}
+.primary:hover{background:#f18bb8!important}
+.primary:active{box-shadow:1px 2px 0 #8e426f,inset 2px 2px 7px rgba(52,15,47,.3)!important}
+.make-row{background:#37283f!important;border:1px solid #62465d!important;box-shadow:inset 3px 4px 9px rgba(8,4,18,.36),inset -1px -1px 3px rgba(160,127,173,.12)!important}
+#backpackControls:not([hidden]){background:#302940!important;border:1px solid #574d6f!important;box-shadow:inset 2px 3px 7px rgba(5,3,13,.42)!important}
+#backpackControls .size,#backpackControls .check{color:#f3ecff!important}
+.paperwrap{background:#fff!important;border:4px solid #514961!important;border-radius:18px!important;
+ box-shadow:inset 2px 2px 9px rgba(6,4,15,.15),5px 7px 14px rgba(4,3,13,.45),-2px -2px 8px rgba(121,112,157,.12)!important}
+.viewer{background:#1a1b29!important;border:4px solid #514961!important;border-radius:18px!important;
+ box-shadow:inset 3px 3px 10px rgba(2,2,11,.45),5px 7px 14px rgba(4,3,13,.45),-2px -2px 8px rgba(121,112,157,.12)!important}
+.viewer::before,.viewer::after{content:none!important}
+.sw{border-color:#423a57!important;box-shadow:2px 3px 7px rgba(0,0,0,.5),-1px -1px 4px rgba(178,162,219,.18)!important}
+.sw[aria-pressed="true"]{outline:3px solid #d5afff!important;outline-offset:2px!important}
+input[type=color]{border:2px solid #8b7eaa!important;background:#37314a!important}
+input[type=range]{accent-color:#e98fbd!important}
+input[type=checkbox]{accent-color:#ae8add!important}
+details{border-top-color:#514b66!important;color:#d7cde6!important}
+:focus-visible,.seg input:focus-visible+span{outline:3px solid #dbb6ff!important;outline-offset:2px}
+/* Both stage rectangles are synchronized to the same square size. */
+@media(min-width:821px){
+ .paperwrap,.viewer{width:var(--shared-stage, min(100%, 42vh))!important;height:var(--shared-stage, min(100%, 42vh))!important;
+   max-width:100%!important;max-height:none!important;min-height:0;flex:0 0 auto!important;margin-inline:auto!important}
+ .panel{overflow:hidden}
+}
+@media(max-width:820px){.paperwrap,.viewer{width:min(100%,560px)!important;max-height:none!important}}
+#glassesControls:not([hidden]){background:#302940!important;border:1px solid #574d6f!important;
+ box-shadow:inset 2px 3px 7px rgba(5,3,13,.42)!important}
+#glassesControls .size,#glassesControls .check{color:#f3ecff!important;font-weight:650}
+#glassesControls{gap:9px;align-items:center;flex-wrap:wrap}
+#glassesControls select{max-width:104px}
+#glassesControls input[type=range]{width:92px}
+.examples-row [data-ex="glasses"]{border-color:#a789db!important}
+#glassesControls[hidden]{display:none!important}
+.examples-row [data-style]{white-space:normal}
+@media(min-width:821px){.examples-row{gap:5px!important}.examples-row .chip{font-size:12px!important;padding:4px 6px!important}}
+/* Added customization dock sits below the original two-panel studio. */
+.custom-dock{max-width:1500px;margin:16px auto 32px;padding:16px;border:1px solid var(--line);border-radius:22px;background:var(--surface);box-shadow:var(--shadow);color:var(--fg)}
+.custom-dock h2{font-size:1.14rem;margin-bottom:9px;color:var(--fg)!important}
+.custom-grid{display:grid;grid-template-columns:repeat(5,minmax(170px,1fr));gap:12px}
+.custom-group{padding:12px;border:1px solid var(--line);border-radius:15px;background:var(--surface-2);display:flex;flex-direction:column;align-items:stretch;gap:9px;min-width:0}
+.custom-group h3{font-size:.9rem;margin:0;color:var(--fg)}
+.custom-group label{font-size:.85rem;color:var(--fg);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.custom-group input[type=range]{width:100%;max-width:125px}
+.custom-group select,.custom-group input[type=text]{max-width:100%;min-width:0;background:var(--surface);border:1px solid var(--line);color:var(--fg);border-radius:8px;padding:6px}
+.custom-group .chip{font-size:.8rem;white-space:normal}
+.custom-group button{align-self:stretch}
+.decor-buttons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+.decor-buttons button{font-size:18px;min-width:0;padding:6px 0}
+#showcaseGrid{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.saved-item{width:145px;padding:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;display:grid;gap:5px;color:var(--fg);font-size:12px}
+.saved-item img{width:100%;aspect-ratio:1;object-fit:contain;background:white;border-radius:7px}
+.saved-item .row{gap:4px}.saved-item button{flex:1;font-size:11px;padding:5px}
+#saveStatus{font-size:.8rem;color:var(--muted);min-height:1em}
+@media(max-width:1100px){.custom-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.custom-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.custom-dock{margin:12px 12px 28px;padding:12px}}
+@media(max-width:400px){.custom-grid{grid-template-columns:1fr}}
+
+/* Revised two-panel single-screen composition. */
+.grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+#legacyStudioControls{display:none!important}
+.design-settings{display:flex;gap:7px;flex-wrap:wrap;position:relative;z-index:20;flex:none}
+.design-dropdown{margin:0!important;padding:0!important;border:0!important;position:relative;flex:1 1 175px;min-width:0;font-size:12px!important}
+.design-dropdown>summary{list-style:none;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:6px 9px;font-weight:700;box-shadow:2px 3px 7px rgba(0,0,0,.12)}
+.design-dropdown>summary::-webkit-details-marker{display:none}
+.design-dropdown>summary::after{content:'⌄';float:right;margin-left:4px}
+.design-dropdown[open]>summary{outline:2px solid var(--focus);outline-offset:-2px}
+.settings-inner{position:absolute;top:calc(100% + 5px);left:0;right:0;min-width:min(255px,80vw);padding:12px;display:grid;gap:10px;z-index:100;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:13px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.design-dropdown:last-child .settings-inner{left:auto;right:0}
+.settings-inner label{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;line-height:1.4}
+.settings-inner input[type=range]{width:90px;min-width:50px}
+.settings-inner input[type=color]{flex:0 0 32px}
+.settings-inner select{max-width:155px;font-size:12px}
+.settings-inner small{font-size:11px;color:var(--muted)}
+.settings-inner .chip{width:100%}
+@media(max-width:820px){.grid{display:block!important}.design-dropdown{flex-basis:130px}.settings-inner{min-width:min(245px,85vw)}}
+@media(max-height:620px){.design-dropdown>summary{padding:3px 7px}.design-settings{gap:4px}}
 </style>
 
 <div class="wrap">
   <header class="top">
-    <h1>Draw to 3D <span class="clayTag">✦ Soft Clay Studio</span></h1>
-    <p class="lede">Sketch, make soft 3D clay, and spin your creation. Draw with a mouse or finger, or upload a photo.</p>
+    <h1>👓 Eyewear Studio <span class="clayTag">Dark Clay</span></h1>
+    <p class="lede">Choose an eyewear style, decorate it, then explore your design in 3D!</p>
   </header>
 
+  <nav class="studio-tabs" aria-label="Studio sections"><button class="chip" data-screen="draw" aria-pressed="true">✏️ Draw</button><button class="chip" data-screen="preview" aria-pressed="false">🧊 3D View</button></nav>
   <main class="grid">
     <section class="panel" aria-labelledby="h-draw">
-      <h2 id="h-draw">1. Draw</h2>
+      <h2 id="h-draw">✏️ 1. Draw your design</h2>
 
-      <div class="row" role="toolbar" aria-label="Drawing tools">
+      <div class="row tools-row" role="toolbar" aria-label="Drawing tools">
         <div class="seg" role="group" aria-label="Tool">
-          <button type="button" class="chip" id="tool-pen" aria-pressed="true">Pen</button>
-          <button type="button" class="chip" id="tool-line" aria-pressed="false">Line</button>
-          <button type="button" class="chip" id="tool-oval" aria-pressed="false">Oval</button>
-          <button type="button" class="chip" id="tool-rect" aria-pressed="false">Box</button>
-          <button type="button" class="chip" id="tool-fill" aria-pressed="false">Fill</button>
-          <button type="button" class="chip" id="tool-hole" aria-pressed="false" title="Click a closed area to cut a hole through the 3D shape">Hole</button>
-          <button type="button" class="chip" id="tool-erase" aria-pressed="false">Eraser</button>
+          <button type="button" class="chip" id="tool-pen" aria-pressed="true">✏️ Pen</button>
+          <button type="button" class="chip" id="tool-line" aria-pressed="false">╱ Line</button>
+          <button type="button" class="chip" id="tool-oval" aria-pressed="false">◯ Oval</button>
+          <button type="button" class="chip" id="tool-rect" aria-pressed="false">▢ Box</button>
+          <button type="button" class="chip" id="tool-fill" aria-pressed="false">🪣 Fill</button>
+          <button type="button" class="chip" id="tool-hole" aria-pressed="false" title="Click a closed area to cut a hole through the 3D shape">◉ Hole</button>
+          <button type="button" class="chip" id="tool-erase" aria-pressed="false">⌫ Erase</button>
         </div>
-        <label class="size" for="size">Size <input type="range" id="size" min="3" max="40" value="10"></label>
-        <label class="check" for="smooth"><input type="checkbox" id="smooth" checked> Smooth lines</label>
+        <label class="size" for="size">Brush size <input type="range" id="size" min="3" max="40" value="10"></label>
+        <label class="check" for="smooth"><input type="checkbox" id="smooth" checked> Smooth</label>
       </div>
-      <div class="swatches" id="swatches" role="group" aria-label="Colour">
+      <div class="swatches" id="swatches" role="group" aria-label="Choose a colour">
+        <span class="mini-label">🎨 Colour</span>
         <input type="color" id="colorPick" value="#E8456B" aria-label="Custom colour">
       </div>
 
-      <div class="paperwrap"><canvas id="paper" width="640" height="640" aria-label="Drawing paper. Draw with a finger, a pen or a mouse."></canvas></div>
+      <div class="row" id="frameShapeButtons" role="group" aria-label="Choose glasses frame shape">
+        <span class="mini-label">Frame shape</span>
+        <button type="button" class="chip" id="shape-round" aria-pressed="true">◯ Round</button>
+        <button type="button" class="chip" id="shape-square" aria-pressed="false">▢ Square</button>
+      </div>
 
-      <div class="row">
+      <div class="design-settings" aria-label="Eyewear customization">
+<details class="design-dropdown" id="framesDropdown"><summary>🎨 Frames &amp; materials</summary><div class="settings-inner">
+   <label for="studioFrameColor">Frame colour <input id="studioFrameColor" type="color" value="#6c51c7"></label>
+   <label for="studioMaterial">Material <select id="studioMaterial"><option value="acetate">Glossy acetate</option><option value="matte">Matte plastic</option><option value="metal">Polished metal</option><option value="wood">Natural wood</option><option value="translucent">Translucent</option></select></label>
+   <small>Changes the actual 3D frame, separate from your pen colour.</small>
+  </div></details>
+<details class="design-dropdown" id="lensesDropdown"><summary>🕶️ Lens tints &amp; transparency</summary><div class="settings-inner">
+   <label for="studioLensColor">Tint colour <input id="studioLensColor" type="color" value="#99cbe0"></label>
+   <label for="studioLensOpacity">Tint strength <input id="studioLensOpacity" type="range" min="0" max="100" value="36"><output id="studioOpacityOut">36%</output></label>
+   <button type="button" class="chip" id="studioClearLenses">Clear lenses</button>
+  </div></details>
+</div>
+<div class="paperwrap"><canvas id="paper" width="640" height="640" aria-label="Drawing paper. Draw with a finger, a pen or a mouse."></canvas></div>
+
+      <div class="row edit-row">
         <button type="button" class="chip" id="undo">Undo</button>
-        <button type="button" class="chip" id="clear">Clear paper</button>
-        <label class="chip upload" for="file">Upload photo<input type="file" id="file" accept="image/*"></label>
-        <label class="check" for="clean"><input type="checkbox" id="clean" checked> Clean up photo</label>
+        <button type="button" class="chip" id="clear">Clear drawing</button>
+        <label class="chip upload" for="file">📷 Add photo<input type="file" id="file" accept="image/*"></label>
+        <label class="check" for="clean"><input type="checkbox" id="clean" checked> Fix photo</label>
       </div>
 
-      <div class="row">
-        <span class="label">Examples</span>
-        <button type="button" class="chip" data-ex="fish">Fish</button>
-        <button type="button" class="chip" data-ex="star">Star</button>
-        <button type="button" class="chip" data-ex="heart">Heart</button>
-        <button type="button" class="chip" data-ex="vase">Vase</button>
-        <button type="button" class="chip" data-ex="blank">Blank</button>
-      </div>
+      <div class="row examples-row" role="group" aria-label="Choose eyewear style">
+         <span class="mini-label">Choose a style</span>
+         <button type="button" class="chip" data-style="ordinary" aria-pressed="true">👓 Ordinary glasses</button>
+         <button type="button" class="chip" data-style="sunglasses" aria-pressed="false">🕶️ Sunglasses</button>
+         <button type="button" class="chip" data-style="reading" aria-pressed="false">📖 Reading glasses</button>
+         <button type="button" class="chip" data-style="sport" aria-pressed="false">🏃 Sport glasses</button>
+         <button type="button" class="chip" data-style="contacts" aria-pressed="false">💧 Contact lenses</button>
+       </div>
 
-      <div class="row">
-        <button type="button" class="primary" id="make">Make 3D</button>
-        <label class="check" for="live"><input type="checkbox" id="live" checked> Update 3D after each change</label>
+      <div class="row make-row">
+        <button type="button" class="primary" id="make">✨ Make it 3D!</button>
+        <label class="check" for="live"><input type="checkbox" id="live" checked> Auto-update</label>
       </div>
     </section>
 
     <section class="panel" aria-labelledby="h-look">
-      <h2 id="h-look">2. Look</h2>
+      <h2 id="h-look">🧊 2. See it in 3D</h2>
 
-      <fieldset class="seg" id="modes">
-        <legend class="sr">Type of 3D shape</legend>
-        <label><input type="radio" name="mode" value="puffy" checked><span>Puffy shape</span></label>
-        <label><input type="radio" name="mode" value="relief"><span>Raised drawing</span></label>
-        <label><input type="radio" name="mode" value="spin"><span>Spin (vase)</span></label>
-      </fieldset>
-      <p class="hint" id="modeHint"></p>
-
+       <p class="hint">Your drawing appears on the eyewear in 3D. Drag to rotate, scroll to zoom.</p>
+       <span id="modeHint" hidden></span>
       <div class="viewer" id="viewer" tabindex="0" aria-label="3D model. Drag to turn it, scroll to zoom. Arrow keys also turn it.">
-        <div class="viewmsg" id="viewMsg" role="status"></div>
+        <span class="stage-label">✦ Interactive 3D</span>
+         <span class="stage-help">Drag to orbit · Pinch to zoom</span>
+         <div class="viewmsg" id="viewMsg" role="status"></div>
       </div>
       <p class="status" id="status" role="status" aria-live="polite"></p>
 
       <div class="row between">
         <div class="row">
-          <label class="check" for="auto"><input type="checkbox" id="auto"> Turn automatically</label>
-          <button type="button" class="chip" id="reset">Reset view</button>
+          <label class="check" for="auto"><input type="checkbox" id="auto" checked> Auto-spin</label>
+          <div class="row view-presets" role="group" aria-label="3D camera angle">
+             <button type="button" class="chip" id="viewFront" aria-pressed="false">Front</button>
+             <button type="button" class="chip" id="viewThreeQuarter" aria-pressed="true">3/4</button>
+             <button type="button" class="chip" id="viewSide" aria-pressed="false">Side</button>
+           </div>
+           <button type="button" class="chip" id="reset">↺ Reset view</button>
           <button type="button" class="chip" id="zoomOut" aria-label="Zoom out">&minus;</button>
           <button type="button" class="chip" id="zoomIn" aria-label="Zoom in">+</button>
         </div>
@@ -271,35 +645,38 @@ textarea{width:100%;min-height:84px;resize:vertical;border:1px solid var(--line)
               <option value="wire">Wireframe</option>
             </select>
           </label>
-          <label class="size" for="detail">Detail
+          <label class="size" for="detail">Speed
             <select id="detail">
-              <option value="128">Low (fastest)</option>
-              <option value="192">Medium</option>
-              <option value="256">High</option>
+              <option value="128">Fast</option>
+              <option value="192">Balanced</option>
+              <option value="256">Detailed</option>
             </select>
           </label>
         </div>
       </div>
 
-      <div class="sliders">
-        <label class="slider" id="depthRow" for="depth"><span>Depth</span><input type="range" id="depth" min="0.2" max="3" step="0.05" value="1.2"><output id="depthOut">1.2</output></label>
-        <label class="slider" id="puffRow" for="puff"><span>Puffiness</span><input type="range" id="puff" min="0" max="100" value="70"><output id="puffOut">70</output></label>
-      </div>
-
-      <details>
-        <summary>Ideas for the lesson</summary>
-        <ul>
-          <li>Discuss the 3D model: flat, round, thick, thin, smooth, symmetrical.</li>
-          <li>Draw a 2D shape first, predict the 3D result, then press Make 3D to check.</li>
-          <li>Draw half a vase as a full outline, then explain how the shape spins around its centre line.</li>
-          <li>Close the outline of every shape. Open lines turn into thin tubes.</li>
-          <li>Use Hole, then click inside a closed area (for example the middle of a donut) to cut a hole through the shape.</li>
-          <li>Keys: P pen, L line, O oval, B box, F fill, H hole, E eraser, Ctrl+Z undo.</li>
-        </ul>
-      </details>
+      <div class="row" id="backpackControls" hidden></div>
+       <div class="row" id="glassesControls">
+         <select id="lensShape" hidden aria-label="Frame shape"><option value="round">Round</option><option value="square" selected>Square</option></select>
+         <label class="size" for="frameSize">Size <input type="range" id="frameSize" min="65" max="120" value="100"></label>
+         <label class="check" for="tintedLenses"><input type="checkbox" id="tintedLenses" checked> Tinted lenses</label>
+       </div>
+       <div class="row" id="removedBackpackControls" hidden>
+         <input type="range" id="strapWidth" value="18"><input type="checkbox" id="showStraps" checked>
+       </div>
+      <div class="sliders" hidden>
+         <label class="slider" id="depthRow" for="depth"><span>Thickness</span><input type="range" id="depth" min="0.2" max="3" step="0.05" value="1.2"><output id="depthOut">1.2</output></label>
+         <label class="slider" id="puffRow" for="puff"><span>Roundness</span><input type="range" id="puff" min="0" max="100" value="70"><output id="puffOut">70</output></label>
+       </div>
     </section>
-  </main>
+<div id="legacyStudioControls" hidden aria-hidden="true">
+<input id="studioStickerSize" type="range" value="48"><button id="studioNoSticker"></button>
+<input id="studioMannequin" type="checkbox"><input id="studioSkin" type="color" value="#c68d70"><input id="studioHeadSize" type="range" value="100"><button id="studioFrontView"></button>
+<input id="studioDesignName" value="My eyewear"><button id="studioSave"></button><button id="studioExport"></button><button id="studioExportJSON"></button><input type="file" id="studioImport"><span id="saveStatus"></span><div id="showcaseGrid"></div>
 </div>
+</main>
+</div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -340,7 +717,7 @@ function setColor(c){
   Array.prototype.forEach.call(swWrap.querySelectorAll('.sw'),function(b){b.setAttribute('aria-pressed',b.dataset.c.toLowerCase()===c.toLowerCase()?'true':'false');});
   if(tool==='erase'||tool==='hole')setTool('pen');
 }
-$('colorPick').addEventListener('input',function(){setColor(this.value);});
+$('colorPick').addEventListener('input',function(){setColor(this.value);if(glassesMode)createGlassesParts();});
 function setTool(t){
   tool=t;
   TOOLS.forEach(function(n){$('tool-'+n).setAttribute('aria-pressed',n===t?'true':'false');});
@@ -418,13 +795,14 @@ function floodFill(sx,sy,rgb){
 }
 
 $('undo').addEventListener('click',function(){var u=undoStack.pop(); if(u){ctx.putImageData(u,0,0);changed();}});
-$('clear').addEventListener('click',function(){pushUndo();whitePaper();changed();setStatus('The paper is empty. Draw a shape or choose an example.');});
+$('clear').addEventListener('click',function(){chooseEyewear(eyewearStyle);setStatus('Drawing reset. Choose a pen colour to decorate your eyewear.');});
 
 $('file').addEventListener('change',function(){
   var f=this.files&&this.files[0]; this.value='';
   if(!f)return;
   var url=URL.createObjectURL(f), im=new Image();
   im.onload=function(){
+    glassesMode=true;
     pushUndo(); whitePaper();
     var s=Math.min(SIZE/im.width,SIZE/im.height), w=im.width*s, h=im.height*s;
     ctx.drawImage(im,(SIZE-w)/2,(SIZE-h)/2,w,h);
@@ -455,7 +833,44 @@ function cleanPhoto(){
 /* ---------- example drawings ---------- */
 function outline(){ctx.lineWidth=9;ctx.lineJoin='round';ctx.lineCap='round';ctx.strokeStyle=INK;}
 function dot(x,y,r,fill){ctx.fillStyle=fill;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.stroke();}
+var backpackMode=false, backpackParts=null, glassesMode=false, glassesParts=null;
+var glassesGuide=null; // Original example pixels; custom artwork is the difference.
 var samples={
+  glasses:function(){
+    whitePaper();
+    /* Front view sketch guide: lenses, curved bridge, and side arms. */
+    ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.strokeStyle='#6C51C7';ctx.lineWidth=19;
+    [-1,1].forEach(function(side){
+      ctx.beginPath();ctx.ellipse(320+side*145,315,115,91,0,0,Math.PI*2);ctx.stroke();
+      ctx.strokeStyle='#9C8BE4';ctx.lineWidth=9;
+      ctx.beginPath();ctx.ellipse(320+side*145,315,104,80,0,0,Math.PI*2);ctx.stroke();
+      ctx.strokeStyle='#6C51C7';ctx.lineWidth=19;
+    });
+    ctx.beginPath();ctx.moveTo(282,299);ctx.quadraticCurveTo(320,259,358,299);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(61,292);ctx.lineTo(22,264);ctx.moveTo(579,292);ctx.lineTo(618,264);ctx.stroke();
+    ctx.fillStyle='#c9e8f6';ctx.globalAlpha=.35;
+    [-1,1].forEach(function(side){ctx.beginPath();ctx.ellipse(320+side*145,315,101,78,0,0,Math.PI*2);ctx.fill();});
+    ctx.globalAlpha=1;
+  },
+  backpack:function(){
+    whitePaper();
+    /* Closed, rounded backpack silhouette. Decorations stay editable with every paper tool. */
+    ctx.fillStyle='#9B8DE6';ctx.strokeStyle=INK;ctx.lineWidth=9;
+    ctx.beginPath();ctx.moveTo(210,174);ctx.quadraticCurveTo(320,112,430,174);
+    ctx.quadraticCurveTo(491,210,488,304);ctx.lineTo(488,490);
+    ctx.quadraticCurveTo(488,557,418,565);ctx.lineTo(222,565);
+    ctx.quadraticCurveTo(152,557,152,490);ctx.lineTo(152,304);
+    ctx.quadraticCurveTo(149,210,210,174);ctx.closePath();ctx.fill();ctx.stroke();
+    /* Pocket and zipper deliberately drawn on the body so pupils can recolour them. */
+    ctx.fillStyle='#C9BDF4';ctx.lineWidth=8;
+    ctx.beginPath();ctx.moveTo(207,388);ctx.quadraticCurveTo(320,370,433,388);
+    ctx.lineTo(433,490);ctx.quadraticCurveTo(432,515,408,516);
+    ctx.lineTo(232,516);ctx.quadraticCurveTo(208,514,207,490);ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.lineWidth=7;ctx.strokeStyle='#60518B';ctx.beginPath();ctx.moveTo(222,402);ctx.lineTo(418,402);ctx.stroke();
+    ctx.fillStyle='#FFE1A6';ctx.fillRect(382,395,18,14);
+    ctx.strokeStyle='#F5DBFF';ctx.lineWidth=13;ctx.beginPath();ctx.moveTo(208,230);ctx.quadraticCurveTo(320,188,432,230);ctx.stroke();
+  },
   fish:function(){
     whitePaper();outline();
     ctx.fillStyle='#FFB347';
@@ -497,14 +912,96 @@ var samples={
   },
   blank:function(){whitePaper();}
 };
-Array.prototype.forEach.call(document.querySelectorAll('[data-ex]'),function(b){
-  b.addEventListener('click',function(){
-    var n=b.dataset.ex; pushUndo(); samples[n]();
-    if(n==='vase')setMode('spin'); else if(n!=='blank'&&mode==='spin')setMode('puffy');
-    if(n==='blank'){if(mesh)mesh.visible=false;renderVersion++;setStatus('The paper is empty. Draw a shape or choose an example.');return;}
-    build(); built=true;
-  });
-});
+var eyewearStyle='ordinary';
+function drawEyewearGuide(style){
+  whitePaper();
+  ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+  var contacts=style==='contacts', sporty=style==='sport', sun=style==='sunglasses', reading=style==='reading';
+  var frame=sun?'#292736':sporty?'#ea5c75':reading?'#99672e':'#6C51C7';
+  if(contacts){
+    [-1,1].forEach(function(side){
+      var x=320+side*145;
+      ctx.fillStyle='#b4e9ef';ctx.globalAlpha=.55;ctx.beginPath();ctx.arc(x,320,112,0,Math.PI*2);ctx.fill();
+      ctx.globalAlpha=1;ctx.strokeStyle='#58a9bd';ctx.lineWidth=7;ctx.stroke();
+      ctx.strokeStyle='#72ccce';ctx.lineWidth=12;ctx.beginPath();ctx.arc(x,320,57,0,Math.PI*2);ctx.stroke();
+      ctx.fillStyle='#1d6382';ctx.beginPath();ctx.arc(x,320,22,0,Math.PI*2);ctx.fill();
+    });
+  }else{
+    var ry=sporty?72:reading?70:85, rx=sporty?124:reading?108:111;
+    var square=$('lensShape').value==='square';
+    function lensPath(cx, radX, radY){
+      ctx.beginPath();
+      if(!square){ctx.ellipse(cx,315,radX,radY,0,0,Math.PI*2);return;}
+      // Superellipse: soft square corners matching the 3D frame geometry.
+      for(var k=0;k<=80;k++){
+        var a=k/80*Math.PI*2, co=Math.cos(a), si=Math.sin(a);
+        var x=cx+Math.sign(co)*Math.pow(Math.abs(co),.34)*radX;
+        var y=315+Math.sign(si)*Math.pow(Math.abs(si),.34)*radY;
+        if(k===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      }
+      ctx.closePath();
+    }
+    [-1,1].forEach(function(side){
+      var x=320+side*145;
+      ctx.strokeStyle=frame;ctx.lineWidth=sun?23:sporty?20:reading?11:16;
+      lensPath(x,rx,ry);ctx.stroke();
+      ctx.fillStyle=sun?'#353b65':'#b8e6f6';ctx.globalAlpha=sun?.48:.22;
+      lensPath(x,rx-9,ry-9);ctx.fill();ctx.globalAlpha=1;
+    });
+    ctx.strokeStyle=frame;ctx.lineWidth=sun?20:reading?10:17;
+    ctx.beginPath();ctx.moveTo(320-rx/2,298);ctx.quadraticCurveTo(320,267,320+rx/2,298);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(175-rx,300);ctx.lineTo(24,276);ctx.moveTo(465+rx,300);ctx.lineTo(616,276);ctx.stroke();
+  }
+  ctx.restore();
+}
+function chooseEyewear(style){
+  eyewearStyle=style;backpackMode=false;glassesMode=true;
+  $('backpackControls').hidden=true;$('glassesControls').hidden=style==='contacts';
+  Array.prototype.forEach.call(document.querySelectorAll('[data-style]'),function(b){b.setAttribute('aria-pressed',String(b.dataset.style===style));});
+  if(style==='sunglasses'){$('tintedLenses').checked=true;$('lensShape').value='square';}
+  else if(style==='reading'){$('tintedLenses').checked=false;$('lensShape').value='round';}
+  else if(style==='sport'){$('tintedLenses').checked=true;$('lensShape').value='square';}
+  else {$('tintedLenses').checked=(style==='ordinary'||style==='contacts');$('lensShape').value=style==='ordinary'?'square':'round';}
+  pushUndo();drawEyewearGuide(style);glassesGuide=ctx.getImageData(0,0,SIZE,SIZE);
+  updateShapeButtons();
+  if(style==='ordinary')setColor('#6C51C7');
+  if(style==='sunglasses')setColor('#292736');
+  if(style==='reading')setColor('#99672e');
+  if(style==='sport')setColor('#ea5c75');
+  if(style==='contacts')setColor('#58a9bd');
+  built=true;build();
+}
+Array.prototype.forEach.call(document.querySelectorAll('[data-style]'),function(b){b.addEventListener('click',function(){chooseEyewear(b.dataset.style);});});
+function updateShapeButtons(){
+  var value=$('lensShape').value;
+  $('shape-round').setAttribute('aria-pressed',String(value==='round'));
+  $('shape-square').setAttribute('aria-pressed',String(value==='square'));
+  $('frameShapeButtons').hidden=eyewearStyle==='contacts';
+}
+function changeFrameShape(shape){
+  if(eyewearStyle==='contacts')return;
+  if($('lensShape').value===shape)return;
+  // Save the user's changes as a transparent overlay before replacing the guide.
+  var overlay=document.createElement('canvas');overlay.width=SIZE;overlay.height=SIZE;
+  var octx=overlay.getContext('2d');
+  var prior=ctx.getImageData(0,0,SIZE,SIZE);
+  var pixels=octx.createImageData(SIZE,SIZE), a=prior.data, b=glassesGuide&&glassesGuide.data, d=pixels.data;
+  if(b)for(var j=0;j<a.length;j+=4){
+    var delta=Math.max(Math.abs(a[j]-b[j]),Math.abs(a[j+1]-b[j+1]),Math.abs(a[j+2]-b[j+2]));
+    if(delta>12){d[j]=a[j];d[j+1]=a[j+1];d[j+2]=a[j+2];d[j+3]=Math.min(255,Math.round((delta-12)*6));}
+  }
+  octx.putImageData(pixels,0,0);
+  pushUndo();
+  $('lensShape').value=shape;
+  drawEyewearGuide(eyewearStyle);
+  glassesGuide=ctx.getImageData(0,0,SIZE,SIZE);
+  ctx.drawImage(overlay,0,0);
+  updateShapeButtons();
+  built=true;build();
+}
+$('shape-round').addEventListener('click',function(){changeFrameShape('round');});
+$('shape-square').addEventListener('click',function(){changeFrameShape('square');});
+
 
 /* ---------- turning the picture into a 3D shape ---------- */
 var LUT=new Float32Array(256); for(var li=0;li<256;li++)LUT[li]=Math.pow(li/255,2.2);
@@ -665,22 +1162,24 @@ var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce
 function stageFail(msg){var m=$('viewMsg');m.textContent=msg;m.style.display='flex';}
 try{
   if(typeof THREE==='undefined')throw new Error('three');
-  renderer=new THREE.WebGLRenderer({antialias:!lowPower,alpha:true,powerPreference:"low-power"});
+  renderer=new THREE.WebGLRenderer({antialias:!lowPower,alpha:true,powerPreference:"low-power",preserveDrawingBuffer:true});
 }catch(err){renderer=null;stageFail('The 3D view could not start. Check that WebGL is on in your browser, then reload the page.');}
 
 if(renderer){
   renderer.setPixelRatio(lowPower?1:Math.min(window.devicePixelRatio||1,2));
   renderer.outputEncoding=THREE.sRGBEncoding;
+   renderer.toneMapping=THREE.ACESFilmicToneMapping;
+   renderer.toneMappingExposure=1.34;
   viewer.insertBefore(renderer.domElement,viewer.firstChild);
   scene=new THREE.Scene();
-  camera=new THREE.PerspectiveCamera(38,1,0.1,100); camera.position.set(0,0.2,8.5);
-  scene.add(new THREE.HemisphereLight(0xfff6ee,0xa498b2,0.88));
-  var key=new THREE.DirectionalLight(0xfff2e4,1.02); key.position.set(-3,5,7); scene.add(key);
-  var fill=new THREE.DirectionalLight(0xe4e1ff,0.38); fill.position.set(4,-1,4); scene.add(fill);
-  var rim=new THREE.DirectionalLight(0xffffff,0.55); rim.position.set(2,4,-5); scene.add(rim);
+  camera=new THREE.PerspectiveCamera(35,1,0.1,100); camera.position.set(0,0.12,7.7);
+  scene.add(new THREE.HemisphereLight(0xf8f2ff,0x77718f,1.05));
+  var key=new THREE.DirectionalLight(0xfff6ec,1.6); key.position.set(-3,5,7); scene.add(key);
+  var fill=new THREE.DirectionalLight(0xc8baff,0.75); fill.position.set(4,0,5); scene.add(fill);
+  var rim=new THREE.DirectionalLight(0xffffff,1.15); rim.position.set(2,4,-5); scene.add(rim);
   mat=new THREE.MeshStandardMaterial({vertexColors:true,roughness:0.94,metalness:0,side:THREE.DoubleSide});
   group=new THREE.Group(); mesh=new THREE.Mesh(new THREE.BufferGeometry(),mat); group.add(mesh); scene.add(group);
-  group.rotation.set(0.15,-0.42,0);
+  group.rotation.set(0.09,-0.38,0);
   /* Tiny radial alpha texture: a soft, cheap contact shadow (no shadow maps). */
   var shadowCanvas=document.createElement('canvas');shadowCanvas.width=128;shadowCanvas.height=128;
   var shadowContext=shadowCanvas.getContext('2d');
@@ -742,6 +1241,132 @@ if(renderer){
   });
 }
 
+/* Backpack pieces are light-weight, separate 3D geometry placed behind the puffy drawing.
+   This is an example template, not automatic strap recognition from arbitrary sketches. */
+function clearBackpackParts(){
+  if(!backpackParts)return;
+  mesh.remove(backpackParts);
+  backpackParts.traverse(function(o){if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose();});
+  backpackParts=null;renderVersion++;
+}
+function createBackpackParts(){
+  clearBackpackParts();
+  if(!backpackMode||mode!=='puffy'||!mesh||!mesh.geometry)return;
+  var width=+$('strapWidth').value/100;
+  var parts=new THREE.Group();backpackParts=parts;mesh.add(parts);
+  var strapMat=new THREE.MeshStandardMaterial({color:look==='clay'?0xd5b8a8:0x7464ac,roughness:.96,metalness:0});
+  var handleMat=new THREE.MeshStandardMaterial({color:look==='clay'?0xcbb4a8:0x5e518f,roughness:.96,metalness:0});
+  function tube(points,r,material){
+    var curve=new THREE.CatmullRomCurve3(points.map(function(p){return new THREE.Vector3(p[0],p[1],p[2]);}));
+    var g=new THREE.TubeGeometry(curve,lowPower?24:40,r,lowPower?6:8,false);
+    var m=new THREE.Mesh(g,material);parts.add(m);
+  }
+  /* Attachment points fall inside the main backpack silhouette. The outer arcs
+     stand behind its back, and become visible when students turn it around. */
+  [-1,1].forEach(function(side){
+    tube([[side*.65,1.03,-.95],[side*1.11,.56,-1.43],[side*1.22,-.42,-1.72],[side*.95,-1.40,-1.14]],width*.52,strapMat);
+  });
+  tube([[-.36,1.13,-.56],[-.32,1.60,-.65],[0,1.76,-.69],[.32,1.60,-.65],[.36,1.13,-.56]],width*.43,handleMat);
+  parts.visible=$('showStraps').checked;
+  renderVersion++;
+}
+$('strapWidth').addEventListener('input',function(){if(backpackMode)createBackpackParts();});
+$('showStraps').addEventListener('change',function(){if(backpackParts){backpackParts.visible=this.checked;renderVersion++;}});
+
+/* Eyewear is deliberately separate 3D geometry: hollow frames, a bridge,
+   transparent lens surfaces and two hinged arms. The 2D picture is a sketch
+   guide; these adjustable 3D parts are not automatically traced from marks. */
+function clearGlassesParts(){
+  if(!glassesParts)return;
+  group.remove(glassesParts);
+  var materials=[];
+  glassesParts.traverse(function(o){
+    if(o.geometry)o.geometry.dispose();
+    if(o.material&&materials.indexOf(o.material)<0)materials.push(o.material);
+    if(o.material&&o.material.map)o.material.map.dispose();
+  });
+  materials.forEach(function(m){m.dispose();});
+  glassesParts=null;renderVersion++;
+}
+function createGlassesParts(){
+  clearGlassesParts();
+  if(!renderer||!glassesMode||mode!=='puffy')return;
+  var parts=new THREE.Group();glassesParts=parts;group.add(parts);
+  var width=+$('frameSize').value/100, square=$('lensShape').value==='square';
+  var contact=eyewearStyle==='contacts', sporty=eyewearStyle==='sport', sun=eyewearStyle==='sunglasses', reading=eyewearStyle==='reading';
+  var rx=(sporty?.79:.68)*width, ry=(sporty?.47:reading?.43:(square?.52:.59))*width, centers=.86*width;
+  var frameColor=$('studioFrameColor').value;
+  var material=$('studioMaterial').value;
+  var materialProps={acetate:{roughness:.25,metalness:0},matte:{roughness:.96,metalness:0},metal:{roughness:.18,metalness:.86},wood:{roughness:.82,metalness:0},translucent:{roughness:.16,metalness:0,transparent:true,opacity:.7,depthWrite:false}}[material];
+  var frameMat=new THREE.MeshPhysicalMaterial(Object.assign({color:frameColor,clearcoat:material==='acetate'?0.95:material==='metal'?0.55:0.12,clearcoatRoughness:0.16},materialProps));
+  var tint=parseInt($('studioLensOpacity').value,10)/100;
+  var lensMat=new THREE.MeshPhysicalMaterial({color:$('studioLensColor').value,roughness:.10,metalness:0,clearcoat:1,clearcoatRoughness:.06,transparent:true,opacity:$('tintedLenses').checked?Math.max(.04,tint):.025,side:THREE.DoubleSide,depthWrite:false});
+  var hingeMat=new THREE.MeshStandardMaterial({color:0xe4c6c0,roughness:.8,metalness:0});
+  function tube(coords,r,material,closed){
+    var curve=new THREE.CatmullRomCurve3(coords.map(function(p){return new THREE.Vector3(p[0],p[1],p[2]);}),!!closed,'centripetal');
+    var geo=new THREE.TubeGeometry(curve,lowPower?36:64,r,lowPower?6:9,!!closed);
+    parts.add(new THREE.Mesh(geo,material));
+  }
+  function edge(cx){
+    var pts=[], count=lowPower?32:48;
+    for(var i=0;i<count;i++){
+      var a=i*Math.PI*2/count, co=Math.cos(a),si=Math.sin(a);
+      var x=square?Math.sign(co)*Math.pow(Math.abs(co),.34)*rx:co*rx;
+      var y=square?Math.sign(si)*Math.pow(Math.abs(si),.34)*ry:si*ry;
+      pts.push([cx+x,y,.17]);
+    }
+    if(!contact)tube(pts,(reading?.040:sun?.095:.075)*width,frameMat,true);
+    var shape=new THREE.Shape();
+    for(var j=0;j<=count;j++){
+      var b=j*Math.PI*2/count, cb=Math.cos(b),sb=Math.sin(b);
+      var xx=square?Math.sign(cb)*Math.pow(Math.abs(cb),.34)*rx:cb*rx;
+      var yy=square?Math.sign(sb)*Math.pow(Math.abs(sb),.34)*ry:sb*ry;
+      if(j===0)shape.moveTo(cx+xx,yy);else shape.lineTo(cx+xx,yy);
+    }
+    var lens=new THREE.Mesh(new THREE.ShapeGeometry(shape,lowPower?8:12),lensMat);
+    lens.position.z=.11;parts.add(lens);
+  }
+  edge(-centers);edge(centers);
+  if(!contact){tube([[-centers+rx-.03,.13,.2],[-.23,.28,.18],[0,.37,.12],[.23,.28,.18],[centers-rx+.03,.13,.2]],.063*width,frameMat,false);
+  [-1,1].forEach(function(side){
+    var x=side*(centers+rx);
+    tube([[x,.08,.16],[x+side*.13,.07,-.02],[x+side*.15,.04,-.48],[x+side*.18,-.04,-1.06],[x+side*.21,-.18,-1.48]],.067*width,frameMat,false);
+    var hinge=new THREE.Mesh(new THREE.SphereGeometry(.085*width,lowPower?8:12,lowPower?6:10),hingeMat);
+    hinge.position.set(x,.08,.13);parts.add(hinge);
+  });}
+  // Transfer only the student's edits, not the printed glasses guide, onto
+  // a transparent surface attached to the 3D frames and lenses.
+  if(glassesGuide){
+    var art=document.createElement('canvas');art.width=SIZE;art.height=SIZE;
+    var actx=art.getContext('2d'), current=ctx.getImageData(0,0,SIZE,SIZE);
+    var pixels=actx.createImageData(SIZE,SIZE), a=current.data, b=glassesGuide.data, d=pixels.data;
+    var hasArtwork=false;
+    for(var j=0;j<a.length;j+=4){
+      var difference=Math.max(Math.abs(a[j]-b[j]),Math.abs(a[j+1]-b[j+1]),Math.abs(a[j+2]-b[j+2]));
+      if(difference>12){
+        d[j]=a[j];d[j+1]=a[j+1];d[j+2]=a[j+2];
+        d[j+3]=Math.min(255,Math.round((difference-12)*6));
+        hasArtwork=true;
+      }
+    }
+    if(hasArtwork){
+      actx.putImageData(pixels,0,0);
+      var texture=new THREE.CanvasTexture(art);
+      texture.encoding=THREE.sRGBEncoding;
+      texture.minFilter=THREE.LinearFilter;
+      var artMaterial=new THREE.MeshBasicMaterial({map:texture,transparent:true,side:THREE.DoubleSide,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1});
+      var artMesh=new THREE.Mesh(new THREE.PlaneGeometry(W,W),artMaterial);
+      artMesh.position.z=.32;
+      artMesh.renderOrder=5;
+      parts.add(artMesh);
+    }
+  }
+  updateMannequin();
+  renderVersion++;
+}
+['lensShape','frameSize','tintedLenses'].forEach(function(id){
+  $(id).addEventListener(id==='lensShape'||id==='tintedLenses'?'change':'input',function(){if(id==='lensShape')updateShapeButtons();if(glassesMode)createGlassesParts();});
+});
 function applyLook(){
   if(!mat)return;
   mat.vertexColors=(look!=='clay');mat.wireframe=(look==='wire');
@@ -761,6 +1386,13 @@ function applyLook(){
     }
     mesh.geometry.attributes.color.needsUpdate=true;
   }
+  if(backpackParts){
+    backpackParts.children.forEach(function(part){
+      part.material.color.set(look==='clay'?0xd5b8a8:(look==='soft'?0x9386bc:0x7464ac));
+      part.material.wireframe=(look==='wire');
+    });
+  }
+  if(glassesMode)createGlassesParts();
   mat.needsUpdate=true;renderVersion++;
 }
 function setStatus(t){$('status').textContent=t;}
@@ -769,7 +1401,7 @@ function build(){
   clearTimeout(buildTimer);
   if(!renderer)return;
   var px=samplePaper(), info=analyze(px);
-  if(!info){mesh.visible=false;renderVersion++;setStatus('The paper is empty. Draw a shape or choose an example.');return;}
+  if(!info){clearBackpackParts();clearGlassesParts();mesh.visible=false;renderVersion++;setStatus('The paper is empty. Draw a shape or choose an example.');return;}
   var geo=null;
   if(mode==='puffy')geo=heightGeo(puffyHeights(info),px);
   else if(mode==='relief')geo=heightGeo(reliefHeights(info),px);
@@ -782,10 +1414,14 @@ function build(){
   geo.translate(-c.x,-c.y,-c.z);
   var old=mesh.geometry; mesh.geometry=geo; if(old)old.dispose();
   mesh.scale.setScalar(3.45/Math.max(sz.x,sz.y,sz.z,0.01));
-  mesh.visible=true;
+  mesh.visible=!(glassesMode&&mode==='puffy');
+  createBackpackParts();
+  if(!glassesMode)clearGlassesParts();
   applyLook();
   var tris=Math.round(geo.index.count/3), msg='3D model ready ('+tris.toLocaleString()+' triangles). Drag to turn it.';
   if(mode!=='relief'&&info.enclosed<20)msg='Your lines are not closed, so the 3D shape is made from the lines only. Close the outline to fill the shape.';
+  if(backpackMode&&mode==='puffy')msg='Backpack ready! Drag to see the shoulder straps on the back.';
+  if(glassesMode&&mode==='puffy')msg=(eyewearStyle==='contacts'?'Contact lenses':'Eyewear')+' ready! Your drawing appears on the 3D model. Drag to rotate.';
   setStatus(msg);
 }
 function queueBuild(){clearTimeout(buildTimer);buildTimer=setTimeout(build,90);}
@@ -810,8 +1446,20 @@ $('puff').addEventListener('input',function(){puff=this.value/100;$('puffOut').t
 $('look').addEventListener('change',function(){look=this.value;applyLook();});
 $('make').addEventListener('click',function(){built=true;build();});
 $('auto').addEventListener('change',function(){auto=this.checked;});
-$('reset').addEventListener('click',function(){if(!group)return;group.rotation.set(0.15,-0.42,0);camera.position.z=8.5;});
-var autoOn=false; /* pause by default: save Chromebook battery */ $('auto').checked=autoOn; auto=autoOn;
+function setCameraPreset(kind){
+ if(!group||!camera)return;
+ var angles={front:[0,0],threeQuarter:[0.09,-0.38],side:[0.06,-Math.PI/2]};
+ var angle=angles[kind]||angles.threeQuarter;
+ group.rotation.set(angle[0],angle[1],0);
+ camera.position.z=7.7;
+ ['Front','ThreeQuarter','Side'].forEach(function(name){$('view'+name).setAttribute('aria-pressed',String(name.toLowerCase()===kind.toLowerCase()));});
+ renderVersion++;
+}
+$('viewFront').addEventListener('click',function(){setCameraPreset('front');});
+$('viewThreeQuarter').addEventListener('click',function(){setCameraPreset('threeQuarter');});
+$('viewSide').addEventListener('click',function(){setCameraPreset('side');});
+$('reset').addEventListener('click',function(){setCameraPreset('threeQuarter');});
+var autoOn=true; /* auto-spin enabled by default */ $('auto').checked=autoOn; auto=autoOn;
 
 $('detail').value=String(N);
 $('detail').addEventListener('change',function(){
@@ -830,10 +1478,162 @@ document.addEventListener('keydown',function(e){
   if(t)setTool(t);
 });
 
+
+/* ---------- customization extension: keeps existing drawing and 3D pipeline ---------- */
+var activeSticker='', mannequin=null;
+function updateMannequin(){
+ if(!renderer||!group)return;
+ if(mannequin){group.remove(mannequin);mannequin.traverse(function(o){if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose();});mannequin=null;}
+ if(!$('studioMannequin').checked)return;
+ mannequin=new THREE.Group();group.add(mannequin);
+ var skin=new THREE.MeshStandardMaterial({color:$('studioSkin').value,roughness:.89});
+ var head=new THREE.Mesh(new THREE.SphereGeometry(1,lowPower?20:32,lowPower?16:24),skin);
+ var scale=+$('studioHeadSize').value/100;
+ head.scale.set(1.16*scale,1.44*scale,1.10*scale);
+ head.position.set(0,-.15,-.93);mannequin.add(head);
+ var nose=new THREE.Mesh(new THREE.SphereGeometry(.18,12,10),skin);
+ nose.scale.set(.65,1.25,.95);nose.position.set(0,-.25,.10);mannequin.add(nose);
+ var neck=new THREE.Mesh(new THREE.CylinderGeometry(.41,.5,.74,16),skin);
+ neck.position.set(0,-1.69,-.95);mannequin.add(neck);
+ var torso=new THREE.Mesh(new THREE.SphereGeometry(1,20,14),new THREE.MeshStandardMaterial({color:0x8b79ac,roughness:1}));
+ torso.scale.set(1.36,.62,.69);torso.position.set(0,-2.25,-1.10);mannequin.add(torso);
+ // The head is behind the lenses; the artwork and frames stay visible in front.
+ renderVersion++;
+}
+['studioFrameColor','studioMaterial','studioLensColor','studioLensOpacity'].forEach(function(id){
+ $(id).addEventListener(id==='studioMaterial'?'change':'input',function(){
+  $('studioOpacityOut').textContent=$('studioLensOpacity').value+'%';
+  if(id==='studioLensOpacity'||id==='studioLensColor')$('tintedLenses').checked=true;
+  if(glassesMode)createGlassesParts();
+ });
+});
+$('studioClearLenses').addEventListener('click',function(){
+ $('studioLensOpacity').value=0;$('studioOpacityOut').textContent='0%';$('tintedLenses').checked=false;createGlassesParts();
+});
+['studioMannequin','studioSkin','studioHeadSize'].forEach(function(id){
+ $(id).addEventListener(id==='studioMannequin'?'change':'input',updateMannequin);
+});
+$('studioFrontView').addEventListener('click',function(){if(group){group.rotation.set(0,0,0);camera.position.z=7.7;renderVersion++;}});
+Array.prototype.forEach.call(document.querySelectorAll('[data-sticker]'),function(b){
+ b.addEventListener('click',function(){activeSticker=b.dataset.sticker;setTool('pen');
+  document.querySelectorAll('[data-sticker]').forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});
+  setStatus('Sticker selected. Tap the drawing to place '+activeSticker+'.');
+ });
+});
+$('studioNoSticker').addEventListener('click',function(){activeSticker='';document.querySelectorAll('[data-sticker]').forEach(function(b){b.setAttribute('aria-pressed','false');});setStatus('Sticker tool off. Draw as normal.');});
+// Capture sticker taps before the original pen pointerdown handler.
+paper.addEventListener('pointerdown',function(e){
+ if(!activeSticker||e.button>0)return;
+ e.preventDefault();e.stopImmediatePropagation();
+ var p=pos(e), size=+$('studioStickerSize').value;
+ pushUndo();ctx.save();ctx.font=size+'px "Apple Color Emoji","Segoe UI Emoji",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(activeSticker,p.x,p.y);ctx.restore();changed();
+},true);
+function designData(){return {
+ version:1,name:$('studioDesignName').value.trim()||'My eyewear',savedAt:new Date().toISOString(),
+ artwork:paper.toDataURL('image/png'),style:eyewearStyle,shape:$('lensShape').value,
+ frameSize:$('frameSize').value,frameColor:$('studioFrameColor').value,material:$('studioMaterial').value,
+ lensColor:$('studioLensColor').value,lensOpacity:$('studioLensOpacity').value,tinted:$('tintedLenses').checked,
+ mannequin:$('studioMannequin').checked,skin:$('studioSkin').value,headSize:$('studioHeadSize').value,
+ look:$('look').value
+};}
+function applyDesign(d){
+ if(!d||d.version!==1||typeof d.artwork!=='string'||!d.artwork.startsWith('data:image/png;base64,')){setSaveStatus('Invalid design file.');return;}
+ chooseEyewear(['ordinary','sunglasses','reading','sport','contacts'].indexOf(d.style)>=0?d.style:'ordinary');
+ function assign(id,v){if(v!==undefined&&v!==null)$(id).value=v;}
+ assign('studioDesignName',d.name);assign('lensShape',d.shape);assign('frameSize',d.frameSize);
+ assign('studioFrameColor',d.frameColor);assign('studioMaterial',d.material);
+ assign('studioLensColor',d.lensColor);assign('studioLensOpacity',d.lensOpacity);
+ assign('studioSkin',d.skin);assign('studioHeadSize',d.headSize);assign('look',d.look);
+ $('tintedLenses').checked=!!d.tinted;$('studioMannequin').checked=!!d.mannequin;
+ $('studioOpacityOut').textContent=$('studioLensOpacity').value+'%';look=$('look').value;updateShapeButtons();
+ var img=new Image();img.onload=function(){ctx.clearRect(0,0,SIZE,SIZE);ctx.drawImage(img,0,0,SIZE,SIZE);undoStack.length=0;built=true;build();setSaveStatus('Design loaded.');};
+ img.onerror=function(){setSaveStatus('Could not read saved artwork.');};img.src=d.artwork;
+}
+function setSaveStatus(t){$('saveStatus').textContent=t;}
+var galleryKey='eyewear-studio-showcase-v1';
+function readGallery(){try{var a=JSON.parse(localStorage.getItem(galleryKey)||'[]');return Array.isArray(a)?a:[];}catch(e){return [];}}
+function writeGallery(a){try{localStorage.setItem(galleryKey,JSON.stringify(a));return true;}catch(e){setSaveStatus('Browser storage is full or disabled. Download your design file instead.');return false;}}
+function renderGallery(){var target=$('showcaseGrid');target.replaceChildren();readGallery().forEach(function(d,i){
+ var card=document.createElement('div');card.className='saved-item';
+ var img=document.createElement('img');img.src=d.artwork;img.alt='Saved drawing for '+d.name;
+ var name=document.createElement('strong');name.textContent=d.name;
+ var buttons=document.createElement('div');buttons.className='row';
+ var open=document.createElement('button');open.className='chip';open.textContent='Load';open.addEventListener('click',function(){applyDesign(d);});
+ var del=document.createElement('button');del.className='chip';del.textContent='Delete';del.addEventListener('click',function(){var a=readGallery();a.splice(i,1);if(writeGallery(a))renderGallery();});
+ buttons.append(open,del);card.append(img,name,buttons);target.append(card);
+});}
+$('studioSave').addEventListener('click',function(){var a=readGallery();a.unshift(designData());a=a.slice(0,8);if(writeGallery(a)){renderGallery();setSaveStatus('Saved in this browser (up to 8 designs).');}});
+function downloadBlob(blob,filename){var a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1000);}
+$('studioExportJSON').addEventListener('click',function(){downloadBlob(new Blob([JSON.stringify(designData())],{type:'application/json'}),'eyewear-design.json');setSaveStatus('Design file downloaded.');});
+$('studioImport').addEventListener('change',function(){var f=this.files&&this.files[0];this.value='';if(!f)return;
+ if(f.size>9000000){setSaveStatus('Design file is too large.');return;}
+ f.text().then(function(t){applyDesign(JSON.parse(t));}).catch(function(){setSaveStatus('Cannot open this JSON design.');});
+});
+$('studioExport').addEventListener('click',function(){
+ if(!renderer){setSaveStatus('3D preview is unavailable.');return;}
+ renderer.render(scene,camera);
+ var cv=document.createElement('canvas');cv.width=1200;cv.height=670;var c=cv.getContext('2d');
+ c.fillStyle='#f6f0fb';c.fillRect(0,0,1200,670);
+ c.fillStyle='#413052';c.font='bold 34px sans-serif';c.fillText(designData().name.slice(0,40),35,48);
+ c.fillStyle='#ffffff';c.fillRect(30,80,550,550);c.drawImage(paper,35,85,540,540);
+ c.fillStyle='#e9e4f6';c.fillRect(620,80,550,550);
+ try{c.drawImage(renderer.domElement,620,80,550,550);}catch(e){setSaveStatus('Cannot capture 3D view.');return;}
+ c.fillStyle='#5b4b70';c.font='20px sans-serif';c.fillText('2D artwork',40,653);c.fillText('3D design',630,653);
+ cv.toBlob(function(blob){if(blob){downloadBlob(blob,'eyewear-showcase.png');setSaveStatus('Showcase PNG downloaded.');}},'image/png');
+});
+renderGallery();
+
 setMode('puffy');
-samples.fish();
-built=true; build();
+chooseEyewear('ordinary');
 })();
 </script>
 
+
+<script>
+/* Dynamically size both 2D/3D squares into the available screen height. */
+(function(){
+ var root=document.documentElement;
+ var sections=[document.querySelectorAll('.grid>.panel')[0],document.querySelectorAll('.grid>.panel')[1]];
+ function view(name){sections.forEach(function(el,i){el.classList.toggle('is-active',i===({draw:0,preview:1}[name]));});document.querySelectorAll('[data-screen]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.screen===name));});requestAnimationFrame(fit);}
+ document.querySelectorAll('[data-screen]').forEach(function(b){b.addEventListener('click',function(){view(b.dataset.screen);});});
+ function fit(){
+  root.style.setProperty('--studio-draw-offset','0px');
+  root.style.setProperty('--studio-view-offset','0px');
+  root.style.removeProperty('--shared-stage');
+  var mobile=innerWidth<=820;
+  var stages=[document.querySelector('.paperwrap'),document.querySelector('.viewer')];
+  var tops=stages.map(function(st){return st.getBoundingClientRect().top;});
+  var offsets=mobile?[0,0]:[Math.max(0,tops[1]-tops[0]),Math.max(0,tops[0]-tops[1])];
+  var available=[];
+  stages.forEach(function(st,i){
+    var p=sections[i];if(!p)return;
+    var previous=st.style.display;st.style.display='none';
+    var content=0, visibleCount=0;
+    Array.from(p.children).forEach(function(child){
+      if(child!==st&&getComputedStyle(child).display!=='none'){
+        content+=child.getBoundingClientRect().height;visibleCount++;
+      }
+    });
+    var cs=getComputedStyle(p), gap=parseFloat(cs.rowGap)||4;
+    content+=visibleCount*gap+(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0);
+    st.style.display=previous;
+    var ph=p.getBoundingClientRect().height||document.querySelector('.grid').getBoundingClientRect().height;
+    available.push(Math.max(45,Math.min(p.clientWidth-18,ph-content-offsets[i]-8)));
+  });
+  var size=Math.floor(Math.max(45,Math.min.apply(null,available)));
+  root.style.setProperty('--studio-stage',size+'px');
+  if(!mobile){
+    root.style.setProperty('--studio-draw-offset',offsets[0]+'px');
+    root.style.setProperty('--studio-view-offset',offsets[1]+'px');
+  }
+ }
+ view('draw');
+ document.querySelectorAll('.design-dropdown').forEach(function(d){d.addEventListener('toggle',function(){if(d.open)document.querySelectorAll('.design-dropdown').forEach(function(other){if(other!==d)other.open=false;});requestAnimationFrame(fit);});});
+ addEventListener('resize',function(){requestAnimationFrame(fit);});
+ addEventListener('load',function(){setTimeout(fit,80);});
+ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+ new MutationObserver(function(){requestAnimationFrame(fit);}).observe(document.getElementById('glassesControls'),{attributes:true,attributeFilter:['hidden']});
+ requestAnimationFrame(fit);
+})();
+</script>
 </body></html>
