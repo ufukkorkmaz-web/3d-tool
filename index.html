@@ -588,6 +588,38 @@ body:not(.company-launch-active) #companyLaunch{display:none!important}
 @media(max-height:580px) and (min-width:701px){.launch-shell{gap:7px;padding:12px}.logo-option{padding:4px 2px 3px}.logo-option svg{width:26px;height:26px}.launch-field input{padding:7px}.launch-sub{display:none}}
 </style>
 
+
+<style id="walkthroughStyles">
+/* Non-blocking, self-paced tutorial with no mandatory interactions. */
+.tour-launch-btn{padding:7px 12px!important;white-space:nowrap;font-size:12px!important}
+.tour-studio-btn{padding:3px 9px!important;font-size:11px!important;flex:none}
+.tour-spotlight{position:fixed;z-index:10010;pointer-events:none;border:2px solid #f8cbff;border-radius:13px;box-shadow:0 0 0 9999px rgba(7,5,18,.69),0 0 0 5px rgba(218,162,255,.25);transition:top .18s,left .18s,width .18s,height .18s}
+.tour-dialog{position:fixed;z-index:10020;width:min(400px,calc(100vw - 24px));max-height:min(72dvh,570px);overflow-y:auto;background:#28243b;color:#fcf9ff;border:1px solid #9f88c3;border-radius:19px;box-shadow:0 14px 48px rgba(0,0,0,.55);padding:18px;font:14px/1.5 var(--font-body,system-ui,sans-serif)}
+.tour-dialog *{box-sizing:border-box}.tour-dialog h2{color:#fff!important;font-size:19px!important;line-height:1.25;margin:7px 25px 10px 0}.tour-dialog p{margin:0 0 10px;color:#f2eafa}.tour-dialog .tour-eyebrow{color:#e3bbff;font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800}.tour-dialog .tour-tip{background:#39334f;border-radius:10px;padding:10px 11px;color:#f6eaff;font-size:12px;margin:11px 0}.tour-dialog button{font:inherit;cursor:pointer}.tour-close{position:absolute;right:12px;top:11px;border:0;background:transparent;color:white;font-size:23px;line-height:1;padding:5px 8px}.tour-controls{display:flex;gap:7px;justify-content:space-between;align-items:center;margin-top:13px;flex-wrap:wrap}.tour-controls button{border-radius:10px;padding:8px 11px;border:1px solid #9886b5;background:#403653;color:#fff;font-weight:700}.tour-controls button:disabled{opacity:.4;cursor:default}.tour-controls .tour-next{background:#e79ac9;border-color:#e79ac9;color:#28162c}.tour-progress-track{height:5px;border-radius:10px;background:#5c4c70;overflow:hidden;margin-top:9px}.tour-progress-fill{height:100%;background:#e9a8f0;transition:width .2s}.tour-dialog :focus-visible{outline:3px solid #fff;outline-offset:3px}
+.tour-nav-group{display:flex;gap:7px}.tour-dialog .tour-message{font-size:12px;color:#ffd8a5;min-height:0;margin:6px 0 0}.tour-spotlight[hidden],.tour-dialog[hidden]{display:none!important}
+@media(max-width:680px){.tour-dialog{padding:14px;max-height:min(55dvh,440px)}.tour-dialog h2{font-size:17px!important}.tour-launch-btn{font-size:11px!important}.tour-spotlight{transition:none}}
+@media(prefers-reduced-motion:reduce){.tour-spotlight,.tour-progress-fill{transition:none}}
+
+/* Tutorial is independent of the company form and studio tabs. */
+.tour-dialog{left:50%!important;top:50%!important;transform:translate(-50%,-50%);width:min(510px,calc(100vw - 24px));max-height:min(85dvh,660px);padding:22px;z-index:10020}
+.tour-dialog::before{content:'READ-ONLY GUIDE';display:inline-block;color:#f1ceff;border:1px solid #79648f;border-radius:99px;padding:3px 9px;font-size:10px;letter-spacing:.08em;font-weight:800;margin-bottom:10px}
+.tour-dialog .tour-message{color:#ddcfef}
+@media(max-width:680px){.tour-dialog{max-height:85dvh;padding:16px}}
+
+/* Illustrated first-run tutorial, all visuals embedded (no image downloads). */
+.tour-dialog{width:min(620px,calc(100vw - 22px))!important;max-height:calc(100dvh - 28px)!important;padding:19px 22px!important;border-radius:22px!important;background:linear-gradient(145deg,#302943,#242037)!important}
+.tour-dialog::before{content:'WELCOME • VISUAL TUTORIAL';margin-bottom:6px}
+.tour-dialog .tour-visual{width:100%;height:clamp(142px,27dvh,224px);margin:11px 0 13px;border-radius:15px;overflow:hidden;border:1px solid #75658c;background:#211c33}
+.tour-dialog .tour-visual svg{width:100%;height:100%;display:block}
+.tour-dialog h2{margin:6px 25px 6px 0!important}
+.tour-dialog #tourBody{font-size:13px;line-height:1.48}
+.tour-dialog .tour-tip{margin:6px 0 7px;padding:8px 10px}
+.tour-dialog .tour-controls{margin-top:9px}
+.tour-dialog .tour-next{min-width:104px}
+.tour-dialog .tour-eyebrow{display:flex;justify-content:space-between}
+@media(max-width:620px){.tour-dialog{padding:12px 14px!important;max-height:calc(100dvh - 16px)!important}.tour-dialog .tour-visual{height:clamp(115px,23dvh,175px);margin:7px 0 9px}.tour-dialog #tourBody{font-size:12px}.tour-dialog .tour-tip{font-size:11px;padding:7px}.tour-dialog h2{font-size:17px!important;margin:3px 25px 5px 0!important}.tour-dialog::before{font-size:9px;margin:0 0 4px}}
+@media(max-height:590px){.tour-dialog .tour-visual{height:105px}.tour-dialog .tour-tip{padding:6px}.tour-dialog{overflow-y:auto}}
+</style>
 <section id="companyLaunch" aria-labelledby="launchTitle">
  <div class="launch-shell">
   <div class="launch-kicker">Year 7 IPT · Smart Eyewear Challenge</div>
@@ -599,12 +631,12 @@ body:not(.company-launch-active) #companyLaunch{display:none!important}
   </div>
   <div class="launch-logos-head"><strong>Choose your company logo</strong><small>Pick one of 20 designs</small></div>
   <div id="logoChoices" class="logo-choices" role="group" aria-label="Choose one of twenty company logos"></div>
-  <div class="launch-actions"><div><div class="launch-help">You can change your company name and logo later.</div><div id="launchError" class="launch-error" role="status"></div></div><button type="button" id="launchStart" class="primary launch-start">Enter Design Studio →</button></div>
+  <div class="launch-actions"><button type="button" id="tourLaunch" class="chip tour-launch-btn">📖 View tutorial</button><div><div class="launch-help">You can change your company name and logo later.</div><div id="launchError" class="launch-error" role="status"></div></div><button type="button" id="launchStart" class="primary launch-start">Enter Design Studio →</button></div>
  </div>
  <div class="launch-footer">Year 7 IPT - 2026</div>
 </section>
 <div class="wrap">
-  <div class="company-strip" id="companyStrip"><div class="company-identity"><span id="companyStudioLogo" aria-hidden="true"></span><span id="companyStudioName"></span></div><button type="button" id="companyEdit" class="chip company-edit">✎ Edit company</button></div>
+  <div class="company-strip" id="companyStrip"><div class="company-identity"><span id="companyStudioLogo" aria-hidden="true"></span><span id="companyStudioName"></span></div><button type="button" id="tourStudio" class="chip tour-studio-btn">📖 Tutorial</button><button type="button" id="companyEdit" class="chip company-edit">✎ Edit company</button></div>
 
   <nav class="studio-tabs" aria-label="Studio sections"><button class="chip" data-screen="draw" aria-pressed="true">✏️ Draw</button><button class="chip" data-screen="preview" aria-pressed="false">🧊 3D View</button></nav>
   <main class="grid">
@@ -1745,6 +1777,99 @@ chooseEyewear('ordinary');
  document.getElementById('launchStart').addEventListener('click',enter);
  document.getElementById('companyEdit').addEventListener('click',edit);
  paint();
+})();
+</script>
+
+<script id="walkthroughScript">
+(function(){
+ 'use strict';
+ var steps=[
+  {screen:'launch',target:'#companyName',title:'Name your eyewear company',body:'When you use the app, start by creating a memorable company name with your team. Your name appears beside the logo in the studio and above your 3D preview.',tip:'Example: FutureFocus Labs. You do not have to enter a name during this tutorial.'},
+  {screen:'launch',target:'#logoChoices',title:'Choose a company logo',body:'Select one of the 20 logo designs. The selected option is highlighted, and your company identity preview updates immediately.',tip:'You can browse these choices later. No logo selection is required to read on.'},
+  {screen:'launch',target:'#launchStart',title:'Enter the Design Studio',body:'Once you have chosen your name and logo, the “Enter Design Studio” button opens the drawing and 3D workspaces. For now, you can keep reading this tutorial without entering anything.',tip:'This is only an explanation. You do not need to type a name or enter the studio to continue reading.'},
+  {screen:'studio',target:'.examples-row',title:'1. Choose an eyewear style',body:'Pick ordinary glasses, sunglasses, reading glasses, sport glasses, or contact lenses. The starter sketch and 3D model adapt to the chosen style.',tip:'Switching styles replaces the current drawing, so choose your basic design before adding lots of decoration.',mobile:'draw'},
+  {screen:'studio',target:'#frameShapeButtons',title:'2. Set the frame shape',body:'For glasses, use Round or Square to change the outlines of both lenses and their corresponding 3D frames.',tip:'The contact-lens style has no surrounding glasses frame, so these shape controls are hidden for contacts.',mobile:'draw'},
+  {screen:'studio',target:'.tools-row',title:'3. Learn the drawing tools',body:'Pen draws freehand; Line, Oval, and Box create neat shapes. Fill colours a closed area, Hole cuts a filled area from a generated solid shape, and Erase removes marks. Adjust Brush size and toggle Smooth for strokes.',tip:'Select a tool first, then use your mouse, stylus, or finger on the drawing paper.',mobile:'draw'},
+  {screen:'studio',target:'#swatches',title:'4. Choose a drawing colour',body:'Pick one of the colour swatches or use the custom colour picker. This sets the colour of the marks and decorations you put on the drawing.',tip:'Your drawing colour is different from the 3D frame material colour in Frames & materials.',mobile:'draw'},
+  {screen:'studio',target:'#paper',title:'5. Decorate your sketch',body:'Draw patterns, initials, symbols, or smart-feature details directly onto the eyewear template. Your new marks are transferred as artwork onto the 3D view.',tip:'Use Undo for a mistake. Clear drawing resets the template, and Add photo imports an image; Fix photo can improve contrast for a photographed sketch.',mobile:'draw'},
+  {screen:'studio',target:'#framesDropdown',title:'6. Customize frames and materials',body:'Open “Frames & materials” to choose the actual 3D frame colour and its finish: glossy acetate, matte plastic, polished metal, natural wood, or translucent.',tip:'These settings control the 3D model itself, not the colour of the pen on the paper.',mobile:'draw',open:true},
+  {screen:'studio',target:'#lensesDropdown',title:'7. Adjust lens colour and transparency',body:'Open “Lens tints & transparency” to choose the lens tint colour and strength. The “Clear lenses” button makes the lens nearly transparent.',tip:'Compare stronger tints with clear lenses and consider which would suit your eyewear idea.',mobile:'draw',open:true},
+  {screen:'studio',target:'#make',title:'8. Generate your 3D design',body:'Select “Make it 3D!” to rebuild the 3D display. With Auto-update enabled, changes to your design can also update the preview automatically.',tip:'For glasses, the 3D frames are adjustable model parts; the app overlays your sketch decorations rather than automatically tracing every line into the frame geometry.',mobile:'draw'},
+  {screen:'studio',target:'#viewer',title:'9. Rotate and zoom the 3D model',body:'Drag across the 3D viewer to turn the model. Pinch with two fingers to zoom. You can also focus the viewer and use the arrow keys to rotate.',tip:'Check the front, sides, and bridge to see whether your design looks good from every angle.',mobile:'preview'},
+  {screen:'studio',target:'.view-presets',title:'10. Explore camera angles',body:'Use Front, 3/4, and Side for ready-made viewing angles. Reset view restores the camera, plus and minus adjust zoom, and Auto-spin continuously rotates the model.',tip:'Turn Auto-spin off when you want to inspect one detail closely.',mobile:'preview'},
+  {screen:'studio',target:'#glassesControls',title:'11. Refine fit and lens options',body:'Adjust Size to make the eyewear model larger or smaller. Toggle Tinted lenses to compare the selected tint with clear-looking lenses.',tip:'The Size and Tinted lenses options are hidden when you choose contact lenses.',mobile:'preview'},
+  {screen:'studio',target:'#look',title:'12. Compare visual styles',body:'Use Look to switch between Soft clay, My colours, Sand clay, and Wireframe. The Speed menu changes rendering detail to suit your device.',tip:'My colours is useful for seeing how the selected materials and artwork work together.',mobile:'preview'},
+  {screen:'studio',target:'#companyEdit',title:'You are ready to design!',body:'Your team can now experiment with frame styles, custom artwork, and the interactive 3D preview. Select Edit company any time to change your name or logo.',tip:'Challenge: create a branded pair of smart glasses and explain who they are designed for and why.',mobile:'preview'}
+ ];
+ var active=false,index=0,priorFocus=null;
+ var spotlight=document.createElement('div');spotlight.className='tour-spotlight';spotlight.hidden=true;spotlight.setAttribute('aria-hidden','true');
+ var dialog=document.createElement('section');dialog.className='tour-dialog';dialog.hidden=true;dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-label','Eyewear Design Studio tutorial');dialog.setAttribute('tabindex','-1');
+ dialog.innerHTML='<button type="button" class="tour-close" aria-label="Close walkthrough">×</button><div class="tour-eyebrow" id="tourCounter"></div><div class="tour-progress-track" aria-hidden="true"><div class="tour-progress-fill" id="tourFill"></div></div><h2 id="tourTitle"></h2><div class="tour-visual" id="tourVisual" role="img" aria-label="Illustrated example for this tutorial step"></div><p id="tourBody"></p><div class="tour-tip" id="tourTip"></div><p class="tour-message" id="tourMessage" role="status" aria-live="polite"></p><div class="tour-controls"><button type="button" id="tourSkip">Exit tour</button><div class="tour-nav-group"><button type="button" id="tourBack">Back</button><button type="button" id="tourNext" class="tour-next">Next →</button></div></div>';
+ document.body.append(spotlight,dialog);
+ function node(id){return document.getElementById(id);}
+ function launchVisible(){return document.body.classList.contains('company-launch-active');}
+ function switchMobile(which){if(innerWidth>820)return;var button=document.querySelector('[data-screen="'+which+'"]');if(button&&button.getAttribute('aria-pressed')!=='true')button.click();}
+ function targetOf(step){return document.querySelector(step.target);}
+ // Mini-illustrations are original inline SVG, accessible, offline and noninteractive.
+ function illustration(n){
+  var ink='#eee5ff', muted='#beafd5', violet='#a991f8', pink='#f29bca', teal='#79dbce', gold='#ffcf82';
+  function text(x,y,t,size=15,color=ink,weight=650){return '<text x="'+x+'" y="'+y+'" font-size="'+size+'" font-weight="'+weight+'" fill="'+color+'" font-family="Inter,system-ui,sans-serif">'+t+'</text>';}
+  function rect(x,y,w,h,fill='#39314f',r=12,stroke='#6f608b'){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+r+'" fill="'+fill+'" stroke="'+stroke+'"/>';}
+  function line(x1,y1,x2,y2,color=violet,w=4){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+color+'" stroke-width="'+w+'" stroke-linecap="round"/>';}
+  function circle(x,y,r,fill='#493c65',stroke=violet,w=3){return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+w+'"/>';}
+  function glasses(x=160,y=112,scale=1,frame=violet,tinted=false,square=false){var ss='translate('+x+' '+y+') scale('+scale+')';var lens=square?'<rect x="-105" y="-35" width="88" height="70" rx="17"/><rect x="17" y="-35" width="88" height="70" rx="17"/>':'<ellipse cx="-62" cy="0" rx="45" ry="35"/><ellipse cx="62" cy="0" rx="45" ry="35"/>';
+    return '<g transform="'+ss+'" fill="'+(tinted?'#6a739c':'#b6ddf0')+'" fill-opacity="'+(tinted?'.48':'.16')+'" stroke="'+frame+'" stroke-width="9" stroke-linejoin="round">'+lens+'<path d="M -18,-13 Q 0,-31 18,-13" fill="none"/><path d="M -107,-15 L -138,-28 M 107,-15 L 138,-28" fill="none"/></g>';}
+  var a='';
+  switch(n){
+   case 0: a=rect(44,46,232,106)+text(62,75,'YOUR COMPANY',13,muted)+rect(62,84,192,42,'#251f36',8,violet)+text(75,111,'FutureFocus Labs',18,ink)+text(298,97,'✦',48,pink);break;
+   case 1: a=text(38,39,'PICK A LOGO',14,muted)+[0,1,2,3,4].map((v)=>rect(42+v*57,59,49,77,v===2?'#564278':'#332c47',10,v===2?pink:'#685981')+circle(66+v*57,89,12,'none',v===2?pink:teal,3)+text(59+v*57,119,v===2?'✓':'✦',17,v===2?pink:muted)).join('')+text(92,163,'Selected logo appears in your brand',13,muted);break;
+   case 2: a=rect(40,45,280,120)+text(68,78,'YOUR BRAND IS READY',18,ink)+rect(82,103,198,45,'#a44c94',12,'#d7a7ee')+text(108,131,'Enter Design Studio  →',15,'#fff');break;
+   case 3: a=[0,1,2].map((v)=>rect(30+v*105,33,93,132,v===1?'#4e416b':'#342c49',13,v===1?pink:'#706083')+glasses(76+v*105,94,.32,v===1?pink:violet,v===1,v===2)+text(47+v*105,145,['Ordinary','Sun','Sport'][v],13,ink)).join('');break;
+   case 4: a=rect(36,36,140,125)+rect(190,36,140,125)+glasses(106,98,.48,violet,false,false)+glasses(260,98,.48,pink,false,true)+text(81,145,'ROUND',13,teal)+text(233,145,'SQUARE',13,pink);break;
+   case 5: a=rect(26,40,328,120)+['✎','╱','◯','▢','◉','⌫'].map((v,i)=>rect(42+i*50,60,41,45,i===0?'#7756aa':'#453956',8,i===0?pink:'#807094')+text(54+i*50,90,v,23,i===0?'#fff':ink)).join('')+text(47,139,'Pen       Line        Oval       Box        Hole      Erase',12,muted);break;
+   case 6: a=text(34,40,'COLOUR PALETTE',15,muted)+['#e47da5','#ffca75','#80d9bc','#83b9f1','#a991f8','#fff'].map((v,i)=>circle(62+i*48,94,18,v,i===4?'#fff':'#685982',i===4?5:2)).join('')+rect(56,129,268,30,'#5e497d',10)+text(109,150,'Your custom drawing colour',13,ink);break;
+   case 7: a=rect(37,20,305,161,'#fff',12,'#8b7a9e')+glasses(187,94,.8,'#7c5bb5',false,false)+'<path d="M 120 76 Q 145 48 161 76 M 205 114 l 8 -19 8 19 8 -19" stroke="#ef6c9a" stroke-width="5" fill="none" stroke-linecap="round"/>'+text(122,167,'Add your own details!',13,'#66447d');break;
+   case 8: a=glasses(165,96,.73,'#ffb6dc',false,false)+rect(49,139,272,33,'#3e3455')+text(62,160,'Glossy',12,pink)+text(134,160,'Matte',12,teal)+text(205,160,'Metal',12,gold)+text(267,160,'Wood',12,ink)+text(68,29,'FRAME COLOUR + MATERIAL',14,muted);break;
+   case 9: a=glasses(165,84,.66,violet,true,false)+text(42,155,'Clear',14,ink)+rect(95,144,178,16,'#4d4466',8)+rect(95,144,112,16,'#85c7e6',8,'#85c7e6')+circle(207,152,11,'#e9f6ff','#fff',2)+text(283,155,'Tint',14,ink)+text(73,28,'LENS COLOUR + OPACITY',14,muted);break;
+   case 10: a=rect(28,37,145,113,'#f5f3ff',10)+glasses(100,94,.46,'#765cae')+text(183,104,'➜',41,pink)+rect(236,37,116,113,'#342d4a',10)+glasses(293,93,.4,teal,true)+text(43,170,'2D SKETCH',12,muted)+text(253,170,'3D MODEL',12,muted);break;
+   case 11: a=glasses(172,94,.7,violet,true)+circle(172,94,72,'none','#75658f',2)+'<path d="M 97 62 Q 180 -2 265 62" fill="none" stroke="'+teal+'" stroke-width="4" stroke-dasharray="7 7"/><path d="M 255 48 l 13 16 -21 2" fill="none" stroke="'+teal+'" stroke-width="4"/>'+text(103,171,'DRAG TO ROTATE · PINCH TO ZOOM',13,muted);break;
+   case 12: a=['Front','3/4','Side'].map((t,i)=>rect(30+i*109,33,100,128,i===1?'#55416f':'#332d47',12,i===1?pink:'#675982')+glasses(80+i*109,94,.30,i===1?pink:violet,true)+text(60+i*109,143,t,14,ink)).join('');break;
+   case 13: a=glasses(181,83,.6,pink,true)+text(38,147,'SIZE',14,ink)+rect(92,135,226,20,'#4e4265',10)+rect(92,135,148,20,'#a991f8',10,'#a991f8')+circle(240,145,13,'#fbe9ff','#fff',2)+text(110,172,'Smaller',12,muted)+text(270,172,'Larger',12,muted);break;
+   case 14: a=['Soft clay','My colours','Wireframe'].map((t,i)=>rect(23+i*115,28,105,139,i===1?'#54416e':'#332b47',12,i===1?pink:'#6c5e82')+glasses(75+i*115,89,.31,i===1?teal:violet,i===1,i===2)+text(38+i*115,145,t,12,ink)).join('');break;
+   case 15: a=glasses(184,87,.83,teal,true,false)+text(57,32,'YOUR SMART EYEWEAR COMPANY',14,muted)+rect(92,141,197,35,'#a54d91',11,'#e7b5ef')+text(124,164,'START DESIGNING ✓',15,'#fff');break;
+  }
+  return '<svg viewBox="0 0 380 195" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><radialGradient id="tg"><stop stop-color="#55406d"/><stop offset="1" stop-color="#211c32"/></radialGradient></defs><rect width="380" height="195" rx="12" fill="url(#tg)"/><circle cx="361" cy="7" r="82" fill="#8b64ac" opacity=".08"/>'+a+'</svg>';
+ }
+ function display(){
+  if(!active)return;
+  var step=steps[index];
+  node('tourCounter').textContent='APP TUTORIAL  ·  '+(index+1)+' / '+steps.length;
+  node('tourFill').style.width=((index+1)/steps.length*100)+'%';
+  node('tourTitle').textContent=step.title;
+  node('tourVisual').innerHTML=illustration(index);
+  node('tourVisual').setAttribute('aria-label','Visual example: '+step.title);
+  node('tourBody').textContent=step.body;
+  node('tourTip').textContent='💡 '+step.tip;
+  node('tourMessage').textContent='Read at your own pace. No action is required in the app.';
+  node('tourBack').disabled=index===0;
+  node('tourNext').textContent=index===steps.length-1?'Start designing ✓':'Next →';
+  dialog.hidden=false;
+  spotlight.hidden=true;
+  dialog.scrollTop=0;
+ }
+ function start(){priorFocus=document.activeElement;index=0;active=true;display();dialog.focus({preventScroll:true});}
+ function close(){active=false;spotlight.hidden=true;dialog.hidden=true;if(priorFocus&&priorFocus.isConnected&&priorFocus.offsetParent!==null)priorFocus.focus({preventScroll:true});}
+ function next(){if(index>=steps.length-1){close();return;}index++;display();}
+ node('tourLaunch').addEventListener('click',start);node('tourStudio').addEventListener('click',start);
+ dialog.querySelector('.tour-close').addEventListener('click',close);node('tourSkip').addEventListener('click',close);
+ node('tourBack').addEventListener('click',function(){if(index>0){index--;display();}});
+ node('tourNext').addEventListener('click',next);
+ document.addEventListener('keydown',function(e){if(!active)return;if(e.key==='Escape'){e.preventDefault();close();}else if(e.key==='Tab'){
+   var buttons=Array.from(dialog.querySelectorAll('button:not(:disabled)'));var first=buttons[0],last=buttons[buttons.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+ }});
+ dialog.addEventListener('keydown',function(e){if(e.key==='ArrowRight'&&e.target.tagName!=='INPUT'){e.preventDefault();next();}if(e.key==='ArrowLeft'&&e.target.tagName!=='INPUT'){e.preventDefault();if(index>0){index--;display();}}});
+ // Always open the tutorial when the web app first loads. No form completion required.
+ window.requestAnimationFrame(function(){start();});
 })();
 </script>
 </body></html>
