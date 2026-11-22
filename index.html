@@ -606,6 +606,11 @@ body:not(.company-launch-active) #companyLaunch{display:none!important}
 .tour-dialog .tour-message{color:#ddcfef}
 @media(max-width:680px){.tour-dialog{max-height:85dvh;padding:16px}}
 
+/* Frosted backdrop: blur and dim the app behind the tutorial, without blurring the tutorial itself. */
+.tour-backdrop{position:fixed;inset:0;z-index:10015;background:rgba(12,9,24,.54);-webkit-backdrop-filter:blur(11px);backdrop-filter:blur(11px);pointer-events:auto}
+.tour-backdrop[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){.tour-backdrop{transition:none}}
+
 /* Illustrated first-run tutorial, all visuals embedded (no image downloads). */
 .tour-dialog{width:min(620px,calc(100vw - 22px))!important;max-height:calc(100dvh - 28px)!important;padding:19px 22px!important;border-radius:22px!important;background:linear-gradient(145deg,#302943,#242037)!important}
 .tour-dialog::before{content:'WELCOME • VISUAL TUTORIAL';margin-bottom:6px}
@@ -1803,9 +1808,10 @@ chooseEyewear('ordinary');
  ];
  var active=false,index=0,priorFocus=null;
  var spotlight=document.createElement('div');spotlight.className='tour-spotlight';spotlight.hidden=true;spotlight.setAttribute('aria-hidden','true');
+ var backdrop=document.createElement('div');backdrop.className='tour-backdrop';backdrop.hidden=true;backdrop.setAttribute('aria-hidden','true');
  var dialog=document.createElement('section');dialog.className='tour-dialog';dialog.hidden=true;dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-label','Eyewear Design Studio tutorial');dialog.setAttribute('tabindex','-1');
  dialog.innerHTML='<button type="button" class="tour-close" aria-label="Close walkthrough">×</button><div class="tour-eyebrow" id="tourCounter"></div><div class="tour-progress-track" aria-hidden="true"><div class="tour-progress-fill" id="tourFill"></div></div><h2 id="tourTitle"></h2><div class="tour-visual" id="tourVisual" role="img" aria-label="Illustrated example for this tutorial step"></div><p id="tourBody"></p><div class="tour-tip" id="tourTip"></div><p class="tour-message" id="tourMessage" role="status" aria-live="polite"></p><div class="tour-controls"><button type="button" id="tourSkip">Exit tour</button><div class="tour-nav-group"><button type="button" id="tourBack">Back</button><button type="button" id="tourNext" class="tour-next">Next →</button></div></div>';
- document.body.append(spotlight,dialog);
+ document.body.append(spotlight,backdrop,dialog);
  function node(id){return document.getElementById(id);}
  function launchVisible(){return document.body.classList.contains('company-launch-active');}
  function switchMobile(which){if(innerWidth>820)return;var button=document.querySelector('[data-screen="'+which+'"]');if(button&&button.getAttribute('aria-pressed')!=='true')button.click();}
@@ -1853,12 +1859,13 @@ chooseEyewear('ordinary');
   node('tourMessage').textContent='Read at your own pace. No action is required in the app.';
   node('tourBack').disabled=index===0;
   node('tourNext').textContent=index===steps.length-1?'Start designing ✓':'Next →';
+  backdrop.hidden=false;
   dialog.hidden=false;
   spotlight.hidden=true;
   dialog.scrollTop=0;
  }
  function start(){priorFocus=document.activeElement;index=0;active=true;display();dialog.focus({preventScroll:true});}
- function close(){active=false;spotlight.hidden=true;dialog.hidden=true;if(priorFocus&&priorFocus.isConnected&&priorFocus.offsetParent!==null)priorFocus.focus({preventScroll:true});}
+ function close(){active=false;spotlight.hidden=true;backdrop.hidden=true;dialog.hidden=true;if(priorFocus&&priorFocus.isConnected&&priorFocus.offsetParent!==null)priorFocus.focus({preventScroll:true});}
  function next(){if(index>=steps.length-1){close();return;}index++;display();}
  node('tourLaunch').addEventListener('click',start);node('tourStudio').addEventListener('click',start);
  dialog.querySelector('.tour-close').addEventListener('click',close);node('tourSkip').addEventListener('click',close);
